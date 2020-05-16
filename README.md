@@ -5,6 +5,7 @@
 ## Getting started
 
 ### Step 1
+Follow the tutorial on the [M5Stack website](https://docs.m5stack.com/#/en/arduino/arduino_development).
 Copy the libraries that are used by this project (found in the `libs` folder) to your system.
 The default path is: `%userprofile%\Documents\Arduino\libraries`
 
