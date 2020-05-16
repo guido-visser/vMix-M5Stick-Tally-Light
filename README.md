@@ -4,17 +4,21 @@
 
 ## Getting started
 
-Firstly, make sure you have the [M5Stack and M5StickC Libraries imported](https://docs.m5stack.com/#/en/arduino/arduino_development) in your Arduino IDE.
+### Step 1
+Copy the libraries that are used by this project (found in the `libs` folder) to your system.
+The default path is: `%userprofile%\Documents\Arduino\libraries`
 
-Change the following variables to your specific environment:
+### Step 2
+Change the following variables to your specific environment (found in `a_GLOBAL.ino`):
 *  WIFI_SSID
 *  WIFI_PASS
 *  VMIX_IP
 *  VMIX_PORT (default: 8099)
 *  TALLY_NR (What input number should the Tally listen to, default: 0)
 
+### Step 3
 Upload to your device and check if it works.
-
+---
 ## TODO
 * [x]  Press on M5 button will display IP Address for easy access
 * [ ]  Webserver for easy configuration
