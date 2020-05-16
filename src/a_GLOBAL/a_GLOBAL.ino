@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <WiFi.h>
 #include <M5StickC.h>
 #include <PinButton.h>
@@ -10,5 +11,5 @@
 #define WIFI_PASS ""
 #define VMIX_IP ""
 #define VMIX_PORT 8099
-int TALLY_NR = 0;
+int TALLY_NR = 1;
 // END CONFIGURATION

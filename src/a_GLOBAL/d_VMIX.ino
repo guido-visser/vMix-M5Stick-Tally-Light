@@ -82,7 +82,7 @@ void handleData(String data)
   if (data.indexOf("TALLY") == 0)
   {
 
-    char newState = data.charAt(TALLY_NR + 9);
+    char newState = data.charAt(settings.tallyNumber + 8);
     // Check if tally state has changed
     if (currentState != newState || screen == 1)
     {
