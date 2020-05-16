@@ -18,7 +18,7 @@ Change the following variables to your specific environment (found in `a_GLOBAL.
 
 ### Step 3
 Upload to your device and check if it works.
----
+
 ## TODO
 * [x]  Press on M5 button will display IP Address for easy access
 * [ ]  Webserver for easy configuration
