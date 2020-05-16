@@ -1,0 +1,15 @@
+input {
+	width: 100%;
+}
+body,html{padding: 0; margin: 0;}
+.wrapper{
+	padding: 10px; width: 100%;
+	box-sizing: border-box;
+}
+.wrapper h1{
+	text-align: center;
+}
+input[type="submit"]{
+	width: 50px;
+	margin: 10px auto;
+}

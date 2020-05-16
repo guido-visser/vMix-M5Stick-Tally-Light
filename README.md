@@ -1,6 +1,6 @@
 # vMix M5Stick-C Tally Light
 
-![working example](https://i.imgur.com/beQvKdS.gif "Working Example")
+![](working-example.gif)
 
 ## Getting started
 
