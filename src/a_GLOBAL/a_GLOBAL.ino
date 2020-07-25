@@ -1,8 +1,8 @@
-#include <EEPROM.h>
 #include <WiFi.h>
 #include <M5StickC.h>
 #include <PinButton.h>
 #include <WebServer.h>
+#include <Preferences.h>
 
 #define LED_BUILTIN 10
 

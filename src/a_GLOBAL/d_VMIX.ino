@@ -4,7 +4,7 @@ boolean connectTovMix()
   cls();
   M5.Lcd.println("Connecting to vMix...");
 
-  if (client.connect(VMIX_IP, VMIX_PORT))
+  if (client.connect(&(VMIX_IP[0]), VMIX_PORT))
   {
     M5.Lcd.println("Connected to vMix!");
 
@@ -82,7 +82,7 @@ void handleData(String data)
   if (data.indexOf("TALLY") == 0)
   {
 
-    char newState = data.charAt(settings.tallyNumber + 8);
+    char newState = data.charAt(TALLY_NR + 8);
     // Check if tally state has changed
     if (currentState != newState || screen == 1)
     {

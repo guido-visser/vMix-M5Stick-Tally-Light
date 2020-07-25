@@ -23,20 +23,20 @@ void setup()
   M5.Lcd.setRotation(3);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
-  EEPROM.begin(512);
-  SPIFFS.begin();
-
+  saveWiFiPreferences("foo","bar");
+  loadWiFiPreferences();
+  
+  Serial.print("SSID: ");
+  Serial.println(&(WIFI_SSID[0]));
+  Serial.print("PASS: ");
+  Serial.println(&(WIFI_PASS[0]));
 
   start();
-
-  server.on("/", handle_root);
-  server.begin();
-  Serial.println("HTTP server started");
 }
 
 void loop()
 {
-  server.handleClient();
+  //server.handleClient();
   btnM5.update();
   if (btnM5.isClick()) {
     if (screen == 0) {
@@ -89,14 +89,25 @@ void start()
   M5.Lcd.setCursor(35, 40);
   M5.Lcd.println("by Guido Visser");
   delay(2000);
-  
-  sprintf(deviceName, "vMix_Tally_%d", settings.tallyNumber);
+
+  sprintf(deviceName, "vMix_Tally_%d", TALLY_NR);
   sprintf(apPass, "%s%s", deviceName, "_access");
 
-  connectToWifi();
+  startWiFi();
 
-  if (WiFi.status() == WL_CONNECTED)
-  {
-    connectTovMix();
-  }
+//  connectToWifi();
+//
+//  if (WiFi.status() == WL_CONNECTED)
+//  {
+//    connectTovMix();
+//  }
+}
+
+void showTallyNum(String msg)
+{
+    cls();
+    M5.Lcd.setTextSize(5);
+    M5.Lcd.setTextColor(WHITE, BLACK);
+    M5.Lcd.fillScreen(BLACK);
+    M5.Lcd.println(msg);
 }

@@ -4,9 +4,9 @@ void connectToWifi()
   Serial.println("------------");
   Serial.println("Connecting to WiFi");
   Serial.print("SSID: ");
-  Serial.println(settings.ssid);
+  Serial.println(WIFI_SSID);
   Serial.print("Passphrase: ");
-  Serial.println(settings.pass);
+  Serial.println(WIFI_PASS);
 
   int timeout = 15;
 
@@ -16,7 +16,7 @@ void connectToWifi()
   M5.Lcd.println("Waiting for WiFi");
 
   WiFi.mode(WIFI_STA);
-  WiFi.begin(settings.ssid, settings.pass);
+  WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
 
   Serial.print("Waiting for connection.");
   while (WiFi.status() != WL_CONNECTED and timeout > 0)
@@ -54,31 +54,63 @@ void connectToWifi()
       Serial.println("Unknown Failure");
 
     Serial.println("------------");
-    apStart();
+    //apStart();
   }
 }
 
-void apStart()
+void startWiFi()
 {
-  cls();
-  Serial.println("AP Start");
-  Serial.print("AP SSID: ");
-  Serial.println(deviceName);
-  Serial.print("AP password: ");
-  Serial.println(apPass);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
 
-  M5.Lcd.println("AP Start");
-  M5.Lcd.print("AP SSID: ");
-  M5.Lcd.println(deviceName);
-  M5.Lcd.print("AP password: ");
-  M5.Lcd.println(apPass);
+    // We start by connecting to a WiFi network
 
-  WiFi.mode(WIFI_AP);
-  WiFi.softAP(deviceName, apPass);
-  delay(100);
-  IPAddress myIP = WiFi.softAPIP();
-  Serial.print("IP address: ");
-  Serial.println(myIP);
+    //WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
+    //WiFi.softAP(ssid, password);
 
-  apEnabled = true;
+    M5.Lcd.println();
+    M5.Lcd.setCursor(25, 60);
+    M5.Lcd.println("Waiting for WiFi...");
+
+    //while (WiFi.status() != WL_CONNECTED) {
+    int tries = 0;
+    boolean wifi_connected = true;
+
+    while (WiFi.waitForConnectResult() != WL_CONNECTED)
+    {
+        M5.Lcd.print(".");
+        delay(1000);
+        tries++;
+        if (tries > 10)
+        {
+            tries = 0;
+            Serial.println("Wifi connection failed, start local wifi");
+            wifi_connected = false;
+            startLocalWiFi();
+            break;
+        }
+    }
+
+    if (wifi_connected == false)
+    {
+        startLocalWiFi();
+    }
+    else
+    {
+        cls();
+        M5.Lcd.println("WiFi connected");
+        M5.Lcd.println("IP address: ");
+        M5.Lcd.print(WiFi.localIP());
+        startServer();
+        connectTovMix();
+    }
+}
+
+// This starts the M5Stack as a WiFi Access Point so you can configure it
+void startLocalWiFi()
+{
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP("vMix-M5Stack-Tally", "12345678");
+    showAPScreen();
+    startServer();
 }
