@@ -1,65 +1,6 @@
-void connectToWifi()
-{
-  Serial.println();
-  Serial.println("------------");
-  Serial.println("Connecting to WiFi");
-  Serial.print("SSID: ");
-  Serial.println(WIFI_SSID);
-  Serial.print("Passphrase: ");
-  Serial.println(WIFI_PASS);
-
-  int timeout = 15;
-
-  M5.Lcd.println();
-  M5.Lcd.println();
-  M5.Lcd.setCursor(25, 60);
-  M5.Lcd.println("Waiting for WiFi");
-
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
-
-  Serial.print("Waiting for connection.");
-  while (WiFi.status() != WL_CONNECTED and timeout > 0)
-  {
-    delay(1000);
-    timeout--;
-    Serial.print(".");
-    M5.Lcd.print(".");
-  }
-
-  if (WiFi.status() == WL_CONNECTED)
-  {
-    Serial.println("Success!");
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-    Serial.print("Device name: ");
-    Serial.println(deviceName);
-    Serial.println("------------");
-  }
-  else
-  {
-    if (WiFi.status() == WL_IDLE_STATUS)
-      Serial.println("Idle");
-    else if (WiFi.status() == WL_NO_SSID_AVAIL)
-      Serial.println("No SSID Available");
-    else if (WiFi.status() == WL_SCAN_COMPLETED)
-      Serial.println("Scan Completed");
-    else if (WiFi.status() == WL_CONNECT_FAILED)
-      Serial.println("Connection Failed");
-    else if (WiFi.status() == WL_CONNECTION_LOST)
-      Serial.println("Connection Lost");
-    else if (WiFi.status() == WL_DISCONNECTED)
-      Serial.println("Disconnected");
-    else
-      Serial.println("Unknown Failure");
-
-    Serial.println("------------");
-    //apStart();
-  }
-}
-
 void startWiFi()
 {
+    Serial.println("STARTING WIFI THINGY");
     WiFi.mode(WIFI_STA);
     WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
 
@@ -71,7 +12,7 @@ void startWiFi()
     M5.Lcd.println();
     M5.Lcd.setCursor(25, 60);
     M5.Lcd.println("Waiting for WiFi...");
-
+    M5.Lcd.setCursor(38, 70);
     //while (WiFi.status() != WL_CONNECTED) {
     int tries = 0;
     boolean wifi_connected = true;
@@ -86,7 +27,6 @@ void startWiFi()
             tries = 0;
             Serial.println("Wifi connection failed, start local wifi");
             wifi_connected = false;
-            startLocalWiFi();
             break;
         }
     }
@@ -102,7 +42,7 @@ void startWiFi()
         M5.Lcd.println("IP address: ");
         M5.Lcd.print(WiFi.localIP());
         startServer();
-        connectTovMix();
+        connectTovMix(false);
     }
 }
 
@@ -110,7 +50,9 @@ void startWiFi()
 void startLocalWiFi()
 {
     WiFi.mode(WIFI_AP);
-    WiFi.softAP("vMix-M5Stack-Tally", "12345678");
+    WiFi.softAP("vMix-M5Stick-Tally", "12345678");
+    apEnabled = true;
     showAPScreen();
+    delay(100);
     startServer();
 }

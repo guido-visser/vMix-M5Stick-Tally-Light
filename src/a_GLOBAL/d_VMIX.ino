@@ -1,11 +1,13 @@
 // Connect to vMix instance
-boolean connectTovMix()
+boolean connectTovMix(bool recursive)
 {
-  cls();
+  resetScreen();
+  Serial.println("Connecting to vMix...");
   M5.Lcd.println("Connecting to vMix...");
 
   if (client.connect(&(VMIX_IP[0]), VMIX_PORT))
   {
+    connectedTovMix = true;
     M5.Lcd.println("Connected to vMix!");
 
     // Subscribe to the tally events
@@ -14,12 +16,15 @@ boolean connectTovMix()
   }
   else
   {
+    if(recursive){
+      return false;
+    }
     char tryCount = 0;
     cls();
     M5.Lcd.println("Could not connect to vMix");
     M5.Lcd.println("Retrying: 0/3");
     boolean retry = false;
-    for (int i = 0; i < 3; ++i)
+    for (uint8_t i = 0; i < 3; i++)
     {
       Serial.print(i);
       retry = retryConnectionvMix(i);
@@ -28,22 +33,21 @@ boolean connectTovMix()
       }
     }
     cls();
-    M5.Lcd.println("Couldn't connect to vMix");
-    M5.Lcd.println();
-    M5.Lcd.println("Please restart device");
-    M5.Lcd.println("to retry");
+    connectedTovMix = false;
+    noConnectionTovMix();
     return false;
   }
 }
 
-boolean retryConnectionvMix(char tryCount) {
+boolean retryConnectionvMix(int tryCount) {
   cls();
+  M5.Lcd.setTextSize(1);
   M5.Lcd.println("Couldn't connect to vMix");
   M5.Lcd.print("Retrying: ");
   M5.Lcd.print(tryCount);
   M5.Lcd.print("/3");
   delay(2000);
-  boolean conn = connectTovMix();
+  boolean conn = connectTovMix(true);
   if (conn) {
     return false;
   }
@@ -115,4 +119,10 @@ void showTallyScreen() {
     default:
       setTallyOff();
   }
+}
+
+void noConnectionTovMix(){
+  resetScreen();
+  M5.Lcd.println("Couldn't connect to vMix");
+  M5.Lcd.println("Trying to reconnect...");
 }

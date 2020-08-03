@@ -6,10 +6,12 @@
 
 #define LED_BUILTIN 10
 
+Preferences preferences;
+
 //USER CONFIGURATION -- Fill these in
-#define WIFI_SSID ""
-#define WIFI_PASS ""
-#define VMIX_IP ""
-#define VMIX_PORT 8099
+String WIFI_SSID = "";
+String WIFI_PASS = "";
+String VMIX_IP = "";
+int VMIX_PORT = 8099;
 int TALLY_NR = 1;
 // END CONFIGURATION
