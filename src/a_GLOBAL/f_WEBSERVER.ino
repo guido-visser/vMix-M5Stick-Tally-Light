@@ -27,7 +27,7 @@ void handle_root()
     HTML += "SSID:<br/>";
     HTML += "<input type='text' name='ssid' value='" + (String)WIFI_SSID + "'>";
     HTML += "Password:<br/>";
-    HTML += "<input type='password' name='pwd' value='" + (String)WIFI_PASS + "'>";
+    HTML += "<input type='text' name='pwd' value='" + (String)WIFI_PASS + "'>";
     HTML += "vMix IP Address:<br/>";
     HTML += "<input type='text' name='vmixip' value ='" + (String)VMIX_IP + "'>";
     HTML += "Tally Number:<br/>";

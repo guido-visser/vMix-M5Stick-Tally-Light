@@ -22,7 +22,7 @@ void startWiFi()
         M5.Lcd.print(".");
         delay(1000);
         tries++;
-        if (tries > 10)
+        if (tries > 5)
         {
             tries = 0;
             Serial.println("Wifi connection failed, start local wifi");
