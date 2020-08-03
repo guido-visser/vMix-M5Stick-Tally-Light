@@ -12,6 +12,9 @@ The default path is: `%userprofile%\Documents\Arduino\libraries`
 Upload to your device.
 
 ### Step 3
+Follow the instructions on the LCD.
+
+### Step 4
 Enjoy 😄
 
 ---
@@ -20,7 +23,7 @@ Enjoy 😄
 * [x]  Webserver for easy configuration
 * [x]  Access Point mode when not connected to a WiFi network
 * [x]  Save the data to the EEPROM
-* [x]  ~~When vMix closes, show on LCD~~ Inifitely retry to connect to vMix
+* [x]  ~~When vMix closes, show on LCD~~ Infinitely retry to connect to vMix
 * [x]  Extra screen to see what input number the M5Stick is using
 * [x]  Dedicated button to reconnect to vMix (BTN39)
 * [ ]  Add battery indicator
