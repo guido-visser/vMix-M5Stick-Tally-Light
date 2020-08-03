@@ -4,6 +4,9 @@
 
 ## Getting started
 
+### Video tutorial
+[![Video Tutoral](http://img.youtube.com/vi/uB_OkMGLoto/0.jpg)](http://www.youtube.com/watch?v=uB_OkMGLoto "How to update the firmware of the M5Stick C to the Tally Light project")
+
 ### Step 1
 1.1  Follow the tutorial on the [M5Stack website](https://docs.m5stack.com/#/en/arduino/arduino_development).
 
