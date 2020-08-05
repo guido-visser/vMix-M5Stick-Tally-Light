@@ -7,7 +7,7 @@ String HEADER = "<!DOCTYPE html>\
   <title>vMix M5Stick-C Tally</title>\
   <link rel='stylesheet' type='text/css' href='style.css'>\
   <style>\
-  .wrapper,input{width:100%}body,html{padding:0;margin:0}.wrapper{padding:10px;box-sizing:border-box}.wrapper h1{text-align:center}input[type=submit]{width:50px;margin:10px auto}\
+  @import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);.wrapper,input[type=text],input[type=number],input[type=submit]{width:100%;box-sizing:border-box}body,html{background:#2b2b2b;color:#eee;padding:0;margin:0;font-family:'Open Sans',verdana,sans-serif}.wrapper{padding:10px}.wrapper h1{text-align:center}input[type=text],input[type=number]{margin-bottom:10px}input{background-color:#6d6d6d;color:#f0f0f0;border:1px solid #000;font-size:18px;height:35px;padding:0 5px}input[type=submit]{height:50px;margin:10px auto}@media screen and (min-width:600px){.wrapper{width:600px;margin:0 auto}}\
   </style>\
   </head>\
   <body>\
@@ -21,37 +21,7 @@ void handle_root()
 {
     String tally = (String)TALLY_NR;
     String HTML = HEADER;
-    HTML += "<div class='wrapper'>\
-    <div class='wrapper'>\
-      <h1>vMix M5Stack Tally Settings</h1>\
-      <form action='/save' id='frmData' method='post'>\
-        SSID:<br/>\
-        <input type='text' id='ssid' name='ssid' value='" + (String)WIFI_SSID + "'>\
-        Password:<br/>\
-        <input type='text' id='pwd' name='pwd' value='" + (String)WIFI_PASS + "'>\
-        vMix IP Address:<br/>\
-        <input type='text' id='vmixip' name='vmixip' value ='" + (String)VMIX_IP + "'>\
-        Tally Number:<br/>\
-        <input type='number' id='tally_num' name='tally_num' value='" + tally + "'>\
-        <input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>\
-      </form>\
-    </div>\
-    <script type='text/javascript'>\
-      const btnSave = document.querySelector('#btnSave');\
-      btnSave.addEventListener('click', function(e){\
-        e.preventDefault();\
-        const ssid = document.querySelector('#ssid').value;\
-        const pwd = document.querySelector('#pwd').value;\
-        const vmixip = document.querySelector('#vmixip').value;\
-        const tally_num = document.querySelector('#tally_num').value;\
-        const frmData = document.querySelector('#frmData');\
-        document.querySelector('#ssid').value = ssid.trim();\
-        document.querySelector('#pwd').value = pwd.trim();\
-        document.querySelector('#vmixip').value = vmixip.trim();\
-        document.querySelector('#ssid').value = ssid.trim();\
-        frmData.submit();\
-      });\
-    </script>";
+    HTML += "<div class=wrapper data-theme=light><h1>vMix M5Stack Tally Settings</h1><form action=/save id=frmData method=post><div>SSID:<br><input id=ssid type=text value='" + (String)WIFI_SSID + "'name=ssid></div><div>Password:<br><input id=pwd type=text value='" + (String)WIFI_PASS + "'name=pwd></div><div>vMix IP Address:<br><input id=vmixip type=text value='" + (String)VMIX_IP + "'name=vmixip></div><div>Tally Number:<br><input id=tally_num type=number value='" + tally + "'name=tally_num></div><input id=btnSave type=submit value=SAVE class='btn btn-primary'></form></div><script>const btnSave=document.querySelector('#btnSave');btnSave.addEventListener('click',function(e){e.preventDefault();const ssid=document.querySelector('#ssid').value;const pwd=document.querySelector('#pwd').value;const vmixip=document.querySelector('#vmixip').value;const frmData=document.querySelector('#frmData');document.querySelector('#ssid').value=ssid.trim();document.querySelector('#pwd').value=pwd.trim();document.querySelector('#vmixip').value=vmixip.trim();frmData.submit()})</script>";
     HTML += FOOTER;
 
     server.send(200, "text/html", HTML);

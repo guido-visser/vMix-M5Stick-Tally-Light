@@ -32,11 +32,14 @@ Enjoy 😄
 * ⚡  Data is saved to memory, will be remembered after device is turned off
 * ⚡  Dedicated button to reconnect to vMix (BTN39)
 * ⚡  Holding the same button at the end of trying to reconnect will reset the settings
+* ⚡  Dark Web UI
 
 ## TODO
 * [ ]  Configuration tutorial
 	* [ ] Written
 	* [ ] Video
+* [ ]  Option to set the brightness of the LCD
+* [ ]  Use accelerometer to use it in landscape or portrait
 * [ ]  Add battery indicator (need help)
 
 ### Good to know
