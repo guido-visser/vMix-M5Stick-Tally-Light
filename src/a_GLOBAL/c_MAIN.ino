@@ -52,6 +52,17 @@ void loop()
   if (btnReconnect.isClick()) {
     connectTovMix(false);
   }
+  if(btnReconnect.isLongClick()){
+    if(!client.connected()){
+       resetSettings();
+    } else {
+      resetScreen();
+      M5.Lcd.println("No need to reset");
+      M5.Lcd.println("You're connected");
+      delay(3000);
+      showTallyScreen();
+    }
+  }
   
   while (client.available())
   {
@@ -63,7 +74,6 @@ void loop()
   if (!client.connected() && !apEnabled && millis() > lastCheck + interval)
   {
     client.stop();
-    connectTovMix(false);
     lastCheck = millis();
   }
 }

@@ -21,11 +21,6 @@ void loadSettings()
   preferences.end();
 }
 
-void saveSettings()
-{
-
-}
-
 void saveWiFiPreferences(String wifi_ssid, String wifi_pass)
 {
     preferences.begin("vMixTally", false);
@@ -37,6 +32,23 @@ void saveWiFiPreferences(String wifi_ssid, String wifi_pass)
     preferences.end();
     WIFI_SSID = wifi_ssid;
     WIFI_PASS = wifi_pass;
+}
+
+void resetSettings(){
+  preferences.begin("vMixTally", false);
+  
+  preferences.putString("wifi_ssid", "");
+  preferences.putString("wifi_pass", "");
+  preferences.putString("vmix_ip", "");
+  preferences.putUInt("tally", 1);
+  
+  preferences.end();
+
+  Serial.println("Settings are reset");
+  resetScreen();
+  M5.Lcd.println("Settings are reset");
+  M5.Lcd.println();
+  M5.Lcd.println("Please reboot device");
 }
 
 // Print settings

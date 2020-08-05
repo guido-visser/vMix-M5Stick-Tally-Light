@@ -124,5 +124,10 @@ void showTallyScreen() {
 void noConnectionTovMix(){
   resetScreen();
   M5.Lcd.println("Couldn't connect to vMix");
-  M5.Lcd.println("Trying to reconnect...");
+  M5.Lcd.println();
+  M5.Lcd.println("vMix is closed");
+  M5.Lcd.println("or check settings");
+  M5.Lcd.println();
+  M5.Lcd.print("http://");
+  M5.Lcd.println(WiFi.localIP());
 }

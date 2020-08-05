@@ -1,0 +1,30 @@
+<div class='wrapper'>
+	<h1>vMix M5Stack Tally Settings</h1>
+	<form action='/save' id='frmData' method='post'>
+		SSID:<br/>
+		<input type='text' id='ssid' name='ssid' value='" + (String)WIFI_SSID + "'>
+		Password:<br/>
+		<input type='text' id='pwd' name='pwd' value='" + (String)WIFI_PASS + "'>
+		vMix IP Address:<br/>
+		<input type='text' id='vmixip' name='vmixip' value ='" + (String)VMIX_IP + "'>
+		Tally Number:<br/>
+		<input type='number' id='tally_num' name='tally_num' value='" + tally + "'>
+		<input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>
+	</form>
+</div>
+<script type='text/javascript'>
+	const btnSave = document.querySelector('#btnSave');
+	btnSave.addEventListener('click', function(e){
+		e.preventDefault();
+		const ssid = document.querySelector('#ssid').value;
+		const pwd = document.querySelector('#pwd').value;
+		const vmixip = document.querySelector('#vmixip').value;
+		const tally_num = document.querySelector('#tally_num').value;
+		const frmData = document.querySelector('#frmData');
+		document.querySelector('#ssid').value = ssid.trim();
+		document.querySelector('#pwd').value = pwd.trim();
+		document.querySelector('#vmixip').value = vmixip.trim();
+		document.querySelector('#ssid').value = ssid.trim();
+		frmData.submit();
+	});
+</script>
