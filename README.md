@@ -22,15 +22,22 @@ Follow the instructions on the LCD.
 Enjoy 😄
 
 ---
+## Features
+* ⚡  Press on M5 button will toggle between 3 screens:
+	1. The actual status of the tally
+	2. Network screen, showing the current IP Address so you can access the Web UI
+	3. Show the actual tally input number that is set for the unit
+* ⚡  Webserver for easy configuration
+* ⚡  Access Point mode when not connected to a WiFi network
+* ⚡  Data is saved to memory, will be remembered after device is turned off
+* ⚡  Dedicated button to reconnect to vMix (BTN39)
+* ⚡  Holding the same button at the end of trying to reconnect will reset the settings
+
 ## TODO
-* [x]  Press on M5 button will display IP Address for easy access
-* [x]  Webserver for easy configuration
-* [x]  Access Point mode when not connected to a WiFi network
-* [x]  Save the data to the EEPROM
-* [x]  ~~When vMix closes, show on LCD~~ Infinitely retry to connect to vMix
-* [x]  Extra screen to see what input number the M5Stick is using
-* [x]  Dedicated button to reconnect to vMix (BTN39)
-* [ ]  Add battery indicator
+* [ ]  Configuration tutorial
+	* [ ] Written
+	* [ ] Video
+* [ ]  Add battery indicator (need help)
 
 ### Good to know
 This is my very first C-project, if you have any suggestions on how to improve the code, please let me know.
