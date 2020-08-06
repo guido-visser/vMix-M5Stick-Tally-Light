@@ -2,7 +2,7 @@ WiFiClient client;
 WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult)
 
 PinButton btnM5(37);
-PinButton btnReconnect(39);
+PinButton btnAction(39);
 
 char currentState = -1;
 char screen = 0;
@@ -44,15 +44,17 @@ void loop()
     } else if (screen == 1) {
       showTallyNum();
     } else if (screen == 2) {
+      showBrightnessScreen();
+    } else if (screen == 3) {
       showTallyScreen();
     }
   }
   
-  btnReconnect.update();
-  if (btnReconnect.isClick()) {
+  btnAction.update();
+  if (btnAction.isClick() && screen != 3) {
     connectTovMix(false);
   }
-  if(btnReconnect.isLongClick()){
+  if(btnAction.isLongClick() && screen != 3){
     if(!client.connected()){
        resetSettings();
     } else {
@@ -62,6 +64,10 @@ void loop()
       delay(3000);
       showTallyScreen();
     }
+  }
+
+  if(btnAction.isClick() && screen == 3){
+     updateBrightnessVar();
   }
   
   while (client.available())
@@ -87,6 +93,7 @@ void cls()
 void start()
 {
   cls();
+  loadSettings();
   M5.Lcd.setRotation(3);
   M5.Lcd.setTextSize(1);
   M5.Lcd.setCursor(20, 20);

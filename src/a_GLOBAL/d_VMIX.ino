@@ -12,6 +12,7 @@ boolean connectTovMix(bool recursive)
 
     // Subscribe to the tally events
     client.println("SUBSCRIBE TALLY");
+    showTallyScreen();
     return true;
   }
   else

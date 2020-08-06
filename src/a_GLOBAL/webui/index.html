@@ -6,7 +6,7 @@
   <title>vMix M5Stick-C Tally</title>
   <style>
   	@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-  .wrapper,input[type=text],input[type=number],input[type=submit] {
+  .wrapper,input[type=text],input[type=number],input[type=submit],select {
   	width:100%;
   	box-sizing:border-box
   }
@@ -25,7 +25,7 @@
   	input[type=text],input[type=number]{
   		margin-bottom: 10px;
   	}
-  	input{
+  	input, select{
   		background-color: #6d6d6d;
   		color: #f0f0f0;
   		border: 1px solid #000000;
@@ -63,13 +63,29 @@
 	</div>
 	<div>
 		Tally Number:<br/>
-		<input type='number' id='tally_num' name='tally_num' value='" + tally + "'>
+		<input type='number' min='1' max='1000' id='tally_num' name='tally_num' value='" + tally + "'>
+	</div>
+	<div>
+		Brightness:<br/>
+		<select id='drpBright' name='bright'>
+			<option value='7'>7 (lowest)</option>
+			<option value='8'>8</option>
+			<option value='9'>9</option>
+			<option value='10'>10</option>
+			<option value='11'>11</option>
+			<option value='12'>12</option>
+			<option value='13'>13</option>
+			<option value='14'>14</option>
+			<option value='15'>15 (highest)</option>
+		</select>
 	</div>
 		<input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>
 	</form>
 </div>
 <script type='text/javascript'>
 	const btnSave = document.querySelector('#btnSave');
+	const drpBright = document.querySelector('#drpBright');
+	drpBright.value = '" + bright + "';
 	btnSave.addEventListener('click', function(e){
 		e.preventDefault();
 		const ssid = document.querySelector('#ssid').value;

@@ -18,6 +18,14 @@ void loadSettings()
     TALLY_NR = preferences.getUInt("tally");
     VMIX_IP = preferences.getString("vmix_ip");
   }
+
+  Serial.println("BRIGHTNESS THINGY");
+  Serial.println(preferences.getUInt("bright"));
+
+  if(preferences.getUInt("bright")){
+    BRIGHTNESS = preferences.getUInt("bright");
+    M5.Axp.ScreenBreath(BRIGHTNESS);
+  }
   preferences.end();
 }
 
@@ -49,6 +57,12 @@ void resetSettings(){
   M5.Lcd.println("Settings are reset");
   M5.Lcd.println();
   M5.Lcd.println("Please reboot device");
+}
+
+void saveBrightness(){
+  preferences.begin("vMixTally", false);
+  preferences.putUInt("bright", BRIGHTNESS);
+  preferences.end();
 }
 
 // Print settings
