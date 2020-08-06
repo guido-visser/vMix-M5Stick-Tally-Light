@@ -55,9 +55,9 @@ Enjoy 😄
 	* [x] Written
 	* [ ] Video
 * [x]  Option to set the brightness of the LCD
+* [x]  Add battery indicator
 * [ ]  Use accelerometer to use it in landscape or portrait
 * [ ]  Multiple inputs for a single stick
-* [ ]  Add battery indicator (need help)
 
 ### Good to know
 This is my very first C-project, if you have any suggestions on how to improve the code, please let me know.
