@@ -16,6 +16,8 @@
 * ⚡  Dark Web UI
 * ⚡  Ability to adjust the brightness (either on the stick itself, or via the Web UI)
 * ⚡  Battery indicator
+* ⚡  Landscape & Portrait mode using accelerometer
+* ⚡  Change tally number input on the fly. On the tally input number screen, double click the BTN39 to increase the number. Long click for reset to 1
 
 ---
 ## Getting started: Uploading the code to the stick
@@ -56,7 +58,7 @@ Enjoy 😄
 	* [ ] Video
 * [x]  Option to set the brightness of the LCD
 * [x]  Add battery indicator
-* [ ]  Use accelerometer to use it in landscape or portrait
+* [x]  Use accelerometer to use it in landscape or portrait
 * [ ]  Multiple inputs for a single stick
 
 ### Good to know

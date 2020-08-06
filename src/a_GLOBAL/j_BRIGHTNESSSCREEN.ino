@@ -1,5 +1,7 @@
 void showBrightnessScreen(){
   screen = 3;
+  screenRotation = 3;
+  M5.Lcd.setRotation(3);
   int percentage = 100;
   if(BRIGHTNESS == 7){
     percentage = 0;

@@ -60,24 +60,40 @@ void setTallyProgram()
   digitalWrite(LED_BUILTIN, LOW);
   M5.Lcd.fillScreen(RED);
   M5.Lcd.setTextColor(WHITE, RED);
-  M5.Lcd.setCursor(25, 23);
-  M5.Lcd.println("LIVE");
+  if(screenRotation == 1 || screenRotation == 3){
+    M5.Lcd.setCursor(25, 23);
+    M5.Lcd.println("LIVE");
+  } else if(screenRotation == 0 || screenRotation == 2) {
+    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.println("L");
+  }
+    
 }
 
 void setTallyPreview() {
   digitalWrite(LED_BUILTIN, HIGH);
   M5.Lcd.fillScreen(GREEN);
   M5.Lcd.setTextColor(BLACK, GREEN);
-  M5.Lcd.setCursor(40, 23);
-  M5.Lcd.println("PRE");
+  if(screenRotation == 1 || screenRotation == 3){
+    M5.Lcd.setCursor(40, 23);
+    M5.Lcd.println("PRE");
+  } else if(screenRotation == 0 || screenRotation == 2) {
+    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.println("P");
+  }
 }
 
 void setTallyOff() {
   digitalWrite(LED_BUILTIN, HIGH);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextColor(WHITE, BLACK);
-  M5.Lcd.setCursor(23, 23);
-  M5.Lcd.println("SAFE");
+  if(screenRotation == 1 || screenRotation == 3){
+    M5.Lcd.setCursor(23, 23);
+    M5.Lcd.println("SAFE");
+  } else if(screenRotation == 0 || screenRotation == 2) {
+    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.println("S");
+  }
 }
 
 // Handle incoming data

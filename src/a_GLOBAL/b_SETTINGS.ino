@@ -59,6 +59,19 @@ void resetSettings(){
   M5.Lcd.println("Please reboot device");
 }
 
+void increaseTally(){
+  TALLY_NR++;
+  preferences.begin("vMixTally", false);
+  preferences.putUInt("tally", TALLY_NR);
+  preferences.end();
+}
+void resetTally(){
+  TALLY_NR = 1;
+  preferences.begin("vMixTally", false);
+  preferences.putUInt("tally", TALLY_NR);
+  preferences.end();
+}
+
 void saveBrightness(){
   preferences.begin("vMixTally", false);
   preferences.putUInt("bright", BRIGHTNESS);
