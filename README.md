@@ -4,14 +4,14 @@
 
 ## Features
 * ⚡  Press on M5 button will toggle between 4 screens:
-	1. The actual status of the tally
+	1. The actual status of the tally (a tally status change will default back to this screen)
 	2. Network screen, showing the current IP Address so you can access the Web UI
 	3. Show the actual tally input number that is set for the unit
 	4. The brightness screen. You can use BTN39 on this screen to toggle through the 9 different settings
 * ⚡  Webserver for easy configuration
 * ⚡  Access Point mode when not connected to a WiFi network
 * ⚡  Data is saved to memory, will be remembered after device is turned off
-* ⚡  Dedicated button to reconnect to vMix (BTN39)
+* ⚡  Dedicated button to reconnect to vMix (BTN39, will reconnect to vMix except on the brightness screen)
 * ⚡  Holding the same button at the end of trying to reconnect will reset the settings
 * ⚡  Dark Web UI
 * ⚡  Ability to adjust the brightness (either on the stick itself, or via the Web UI)
