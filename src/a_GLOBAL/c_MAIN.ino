@@ -16,6 +16,7 @@ char apPass[64];
 // Time measure
 int interval = 5000;
 unsigned long lastCheck = 0;
+unsigned long lastBattCheck = 0;
 
 void setup()
 {
@@ -76,6 +77,13 @@ void loop()
     String data = client.readStringUntil('\r\n');
     handleData(data);
   }
+
+  if(millis() > lastBattCheck + 1000){
+    if(screen == 0){
+      lastBattCheck = millis();
+      renderBatteryLevel(); 
+    }
+  }
   
   if (!client.connected() && !apEnabled && millis() > lastCheck + interval)
   {
@@ -113,4 +121,19 @@ void resetScreen(){
   M5.Lcd.fillScreen(TFT_BLACK);
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
+}
+
+void renderBatteryLevel() {
+  M5.Lcd.setTextSize(1);
+  M5.Lcd.setCursor(0,0);
+  M5.Lcd.print("Batt: ");
+  M5.Lcd.print(getBatteryLevel());
+  M5.Lcd.println("%");
+}
+
+int getBatteryLevel(void)
+{
+  uint16_t vbatData = M5.Axp.GetVbatData();
+  double vbat = vbatData * 1.1 / 1000;
+  return floor(100.0 * ((vbat - 3.0) / (4.07 - 3.0)));
 }
