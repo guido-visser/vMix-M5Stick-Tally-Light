@@ -124,10 +124,15 @@ void resetScreen(){
 }
 
 void renderBatteryLevel() {
+  int battLvl = getBatteryLevel();
+  Serial.println(battLvl);
+  if(battLvl > 100){
+    battLvl = 100; 
+  }
   M5.Lcd.setTextSize(1);
   M5.Lcd.setCursor(0,0);
   M5.Lcd.print("Batt: ");
-  M5.Lcd.print(getBatteryLevel());
+  M5.Lcd.print(battLvl);
   M5.Lcd.println("%");
 }
 

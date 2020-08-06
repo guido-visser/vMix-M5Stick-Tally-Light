@@ -120,6 +120,7 @@ void showTallyScreen() {
     default:
       setTallyOff();
   }
+  renderBatteryLevel();
 }
 
 void noConnectionTovMix(){
