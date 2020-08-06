@@ -15,6 +15,7 @@
 * ⚡  Holding the same button at the end of trying to reconnect will reset the settings
 * ⚡  Dark Web UI
 * ⚡  Ability to adjust the brightness (either on the stick itself, or via the Web UI)
+* ⚡  Battery indicator
 
 ---
 ## Getting started: Uploading the code to the stick
