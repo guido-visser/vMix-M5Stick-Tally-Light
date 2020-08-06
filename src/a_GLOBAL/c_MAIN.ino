@@ -11,7 +11,7 @@ bool connectedTovMix = false;
 char deviceName[32];
 int status = WL_IDLE_STATUS;
 bool apEnabled = false;
-char apPass[64];
+boolean started = false;
 
 // Time measure
 int interval = 5000;
@@ -39,8 +39,6 @@ void setup()
   Serial.println(&(WIFI_SSID[0]));
   Serial.print("PASS: ");
   Serial.println(&(WIFI_PASS[0]));
-
-  start();
 }
 
 void loop()
@@ -91,6 +89,11 @@ void loop()
         }
       }
     }
+  }
+
+  if(!started){
+    started = true;
+    start();
   }
   
   btnAction.update();
@@ -153,13 +156,15 @@ void start()
 {
   cls();
   loadSettings();
+  screenRotation = screenRotation == 1 || screenRotation == 3 ? screenRotation : 3;
   M5.Lcd.setRotation(screenRotation);
   M5.Lcd.setTextSize(1);
-  M5.Lcd.setCursor(20, 20);
   M5.Lcd.setTextColor(WHITE, BLACK);
+  M5.Lcd.setCursor(20, 20);
   M5.Lcd.println("vMix M5Stick-C Tally");
   M5.Lcd.setCursor(35, 40);
   M5.Lcd.println("by Guido Visser");
+  
   delay(2000);
 
   startWiFi();
