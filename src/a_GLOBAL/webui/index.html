@@ -62,8 +62,12 @@
 		<input type='text' id='vmixip' name='vmixip' value ='" + (String)VMIX_IP + "'>
 	</div>
 	<div>
-		Tally Number:<br/>
+		Main Tally Number:<br/>
 		<input type='number' min='1' max='1000' id='tally_num' name='tally_num' value='" + tally + "'>
+	</div>
+	<div>
+		Multi Tally (comma separated):<br/>
+		<input type='text' id='m_tally' name='m_tally' value='" + (String)M_TALLY + "'>
 	</div>
 	<div>
 		Brightness:<br/>
@@ -88,10 +92,12 @@
 		const ssid = document.querySelector('#ssid').value;
 		const pwd = document.querySelector('#pwd').value;
 		const vmixip = document.querySelector('#vmixip').value;
+		const m_tally = document.querySelector('#m_tally').value;
 		const frmData = document.querySelector('#frmData');
 		document.querySelector('#ssid').value = ssid.trim();
 		document.querySelector('#pwd').value = pwd.trim();
 		document.querySelector('#vmixip').value = vmixip.trim();
+		document.querySelector('#m_tally').value = m_tally.trim().replace(/[^0-9,]+/g, '');
 		frmData.submit();
 	});
 </script>

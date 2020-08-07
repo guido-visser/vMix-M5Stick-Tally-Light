@@ -22,7 +22,7 @@ void handle_root()
     String tally = (String)TALLY_NR;
     String bright = (String)BRIGHTNESS;
     String HTML = HEADER;
-    HTML += "<div class=wrapper data-theme=light><h1>vMix M5Stack Tally Settings</h1><form action=/save id=frmData method=post><div>SSID:<br><input id=ssid type=text value='" + (String)WIFI_SSID + "'name=ssid></div><div>Password:<br><input id=pwd type=text value='" + (String)WIFI_PASS + "'name=pwd></div><div>vMix IP Address:<br><input id=vmixip type=text value='" + (String)VMIX_IP + "'name=vmixip></div><div>Tally Number:<br><input id=tally_num type=number value='" + tally + "'name=tally_num max=1000 min=1></div><div>Brightness:<br><select id=drpBright name=bright><option value=7>0%<option value=8>20%<option value=9>40%<option value=10>60%<option value=11>80%<option value=12>100%</select></div><input id=btnSave type=submit value=SAVE class='btn btn-primary'></form></div><script>const btnSave=document.querySelector('#btnSave');const drpBright=document.querySelector('#drpBright');drpBright.value='" + bright + "';btnSave.addEventListener('click',function(e){e.preventDefault();const ssid=document.querySelector('#ssid').value;const pwd=document.querySelector('#pwd').value;const vmixip=document.querySelector('#vmixip').value;const frmData=document.querySelector('#frmData');document.querySelector('#ssid').value=ssid.trim();document.querySelector('#pwd').value=pwd.trim();document.querySelector('#vmixip').value=vmixip.trim();frmData.submit()});</script>";
+    HTML += "<div class=wrapper data-theme=light><h1>vMix M5Stack Tally Settings</h1><form action=/save id=frmData method=post><div>SSID:<br><input id=ssid type=text value='" + (String)WIFI_SSID + "'name=ssid></div><div>Password:<br><input id=pwd type=text value='" + (String)WIFI_PASS + "'name=pwd></div><div>vMix IP Address:<br><input id=vmixip type=text value='" + (String)VMIX_IP + "'name=vmixip></div><div>Main Tally Number:<br><input id=tally_num type=number value='" + tally + "'name=tally_num max=1000 min=1></div><div>Multi Tally (comma separated):<br><input id=m_tally type=text value='" + (String)M_TALLY + "'name=m_tally></div><div>Brightness:<br><select id=drpBright name=bright><option value=7>0%<option value=8>20%<option value=9>40%<option value=10>60%<option value=11>80%<option value=12>100%</select></div><input id=btnSave type=submit value=SAVE class='btn btn-primary'></form></div><script>const btnSave=document.querySelector('#btnSave');const drpBright=document.querySelector('#drpBright');drpBright.value='" + bright + "';btnSave.addEventListener('click',function(e){e.preventDefault();const ssid=document.querySelector('#ssid').value;const pwd=document.querySelector('#pwd').value;const vmixip=document.querySelector('#vmixip').value;const m_tally=document.querySelector('#m_tally').value;const frmData=document.querySelector('#frmData');document.querySelector('#ssid').value=ssid.trim();document.querySelector('#pwd').value=pwd.trim();document.querySelector('#vmixip').value=vmixip.trim();document.querySelector('#m_tally').value=m_tally.trim().replace(/[^0-9,]+/g,'');frmData.submit()})</script>";
     HTML += FOOTER;
 
     server.send(200, "text/html", HTML);
@@ -73,6 +73,10 @@ void handle_save()
         preferences.putString("wifi_pass", &(WIFI_PASS[0]));
         Serial.println("PUT WIFI_SSID & WIFI PASS");
     }
+
+    M_TALLY = server.arg("m_tally");
+    preferences.putString("m_tally", &(M_TALLY[0]));
+    
     if (server.arg("vmixip") != "")
     {
         VMIX_IP = server.arg("vmixip");

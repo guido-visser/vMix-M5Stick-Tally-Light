@@ -19,6 +19,10 @@ void loadSettings()
     VMIX_IP = preferences.getString("vmix_ip");
   }
 
+  if(preferences.getString("m_tally").length() > 0){
+    M_TALLY = preferences.getString("m_tally");
+  }
+
   Serial.println("BRIGHTNESS THINGY");
   Serial.println(preferences.getUInt("bright"));
 
@@ -49,6 +53,8 @@ void resetSettings(){
   preferences.putString("wifi_pass", "");
   preferences.putString("vmix_ip", "");
   preferences.putUInt("tally", 1);
+  preferences.putUInt("bright", 12);
+  preferences.putString("m_tally", "");
   
   preferences.end();
 

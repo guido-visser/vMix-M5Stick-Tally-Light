@@ -99,16 +99,46 @@ void setTallyOff() {
 // Handle incoming data
 void handleData(String data)
 {
+  bool changed = false;
   // Check if server data is tally data
   if (data.indexOf("TALLY") == 0)
   {
-
     char newState = data.charAt(TALLY_NR + 8);
     // Check if tally state has changed
     if (currentState != newState || screen == 1)
     {
       currentState = newState;
-      showTallyScreen();
+      changed = true;
+      if(M_TALLY == ""){
+        showTallyScreen();
+      }
+    }
+    if(M_TALLY != ""){
+      if(currentState != '1' && M_TALLY != ""){
+        int str_len = M_TALLY.length() + 1;
+       
+        // Prepare the character array (the buffer) 
+        char str[str_len];
+         
+        // Copy it over 
+        M_TALLY.toCharArray(str, str_len);
+        
+        char * pch;
+        pch = strtok(str, ",");
+        while (pch != NULL)
+        {
+          String c(pch);
+          char newMState = data.charAt(c.toInt() + 8);
+          if((currentState == '0' && (newMState == '1' || newMState == '2')) || (currentState == '2' && (newMState == '1'))){
+            currentState = newMState;
+            changed = true;
+          }
+          pch = strtok(NULL, ",");
+        }
+      }
+      if(changed){
+        showTallyScreen();
+      }
     }
   }
   else

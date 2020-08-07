@@ -12,6 +12,7 @@ Preferences preferences;
 String WIFI_SSID = "";
 String WIFI_PASS = "";
 String VMIX_IP = "";
+String M_TALLY = "";
 int VMIX_PORT = 8099; //USES THE TCP API PORT, THIS IS FIXED IN VMIX
 int TALLY_NR = 1;
 int BRIGHTNESS = 12; //100%
