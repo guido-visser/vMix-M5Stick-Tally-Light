@@ -44,6 +44,9 @@ void updateBrightnessVar(){
     BRIGHTNESS = 11;
   } else if(BRIGHTNESS == 11){
     BRIGHTNESS = 12;
+  } else {
+    //If for some reason the value is different, default back to 100% brightness (12)
+    BRIGHTNESS = 12;
   }
   updateBrightness();
   showBrightnessScreen();
