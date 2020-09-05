@@ -133,7 +133,7 @@ void loop()
   }
 
   if(millis() > lastBattCheck + 1000){
-    if(screen == 0){
+    if(screen == 0 && client.available()){
       lastBattCheck = millis();
       renderBatteryLevel(); 
     }
@@ -143,6 +143,7 @@ void loop()
   {
     client.stop();
     lastCheck = millis();
+    noConnectionTovMix();
   }
 }
 

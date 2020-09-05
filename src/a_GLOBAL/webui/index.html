@@ -48,7 +48,7 @@
 
 <div class='wrapper' data-theme="light">
 	<h1>vMix M5Stack Tally Settings</h1>
-	<form action='/save' id='frmData' method='post'>
+	<form action='/save' id='frmData' method='post' onsubmit="return false;">
 		<div>
 			SSID:<br/>
 			<input type='text' id='ssid' name='ssid' value='" + (String)WIFI_SSID + "'>
@@ -66,7 +66,7 @@
 		<input type='number' min='1' max='1000' id='tally_num' name='tally_num' value='" + tally + "'>
 	</div>
 	<div>
-		Multi Tally (comma separated):<br/>
+		Multi Input (comma separated):<br/>
 		<input type='text' id='m_tally' name='m_tally' value='" + (String)M_TALLY + "'>
 	</div>
 	<div>
@@ -82,23 +82,47 @@
 	</div>
 		<input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>
 	</form>
+	<h2>Reconnect to vMix</h2>
+	<form onsubmit="return false;" action="/reconnect" id="frmReconnect" method="post">
+		<input type="submit" value="RECONNECT" id="btnReconnect" />
+	</form>
 </div>
 <script type='text/javascript'>
 	const btnSave = document.querySelector('#btnSave');
+	const btnReconnect = document.querySelector('#btnReconnect');
 	const drpBright = document.querySelector('#drpBright');
 	drpBright.value = '" + bright + "';
-	btnSave.addEventListener('click', function(e){
+	btnSave.addEventListener('click', async function(e){
 		e.preventDefault();
 		const ssid = document.querySelector('#ssid').value;
 		const pwd = document.querySelector('#pwd').value;
 		const vmixip = document.querySelector('#vmixip').value;
 		const m_tally = document.querySelector('#m_tally').value;
 		const frmData = document.querySelector('#frmData');
-		document.querySelector('#ssid').value = ssid.trim();
-		document.querySelector('#pwd').value = pwd.trim();
-		document.querySelector('#vmixip').value = vmixip.trim();
-		document.querySelector('#m_tally').value = m_tally.trim().replace(/[^0-9,]+/g, '');
-		frmData.submit();
+		const tally_num = document.querySelector('#tally_num').value;
+		let formData = new FormData();
+		formData.append('ssid', ssid.trim());
+		formData.append('pwd',pwd.trim());
+		formData.append('vmixip', vmixip.trim());
+		formData.append('m_tally', m_tally.trim().replace(/[^0-9,]+/g, ''));
+		formData.append('tally_num', tally_num);
+		btnSave.setAttribute('disabled', '');
+		const res = await fetch('/save', {
+		    method: 'POST',
+		    cache: 'no-cache',
+		    referrerPolicy: 'no-referrer',
+		    body: formData
+		});
+		if(res.status === 200){
+			btnSave.value = 'SETTINGS SAVED!';
+			await setTimeout(()=>{btnSave.value = 'SAVE';}, 3000);
+		}
+		btnSave.removeAttribute('disabled');
+	});
+
+	btnReconnect.addEventListener('click', function(e){
+		e.preventDefault();
+		fetch('/reconnect');
 	});
 </script>
 </body>

@@ -178,4 +178,6 @@ void noConnectionTovMix(){
   M5.Lcd.println();
   M5.Lcd.print("http://");
   M5.Lcd.println(WiFi.localIP());
+  M5.Lcd.println();
+  M5.Lcd.println("Press BTN39 to reconnect");
 }
