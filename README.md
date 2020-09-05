@@ -18,7 +18,7 @@
 * ⚡  Battery indicator
 * ⚡  Landscape & Portrait mode using accelerometer
 * ⚡  Change tally number input on the fly. On the tally input number screen, double click the BTN39 to increase the number. Long click for reset to 1
-* ⚡  Multi tally support
+* ⚡  Multi input support
 
 ---
 ## Getting started: Uploading the code to the stick
@@ -57,10 +57,6 @@ Enjoy 😄
 * [ ]  Configuration tutorial
 	* [x] Written
 	* [ ] Video
-* [x]  Option to set the brightness of the LCD
-* [x]  Add battery indicator
-* [x]  Use accelerometer to use it in landscape or portrait
-* [x]  Multiple inputs for a single stick
 
 ### Good to know
 This is my very first C-project, if you have any suggestions on how to improve the code, please let me know.
