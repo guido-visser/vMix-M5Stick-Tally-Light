@@ -67,7 +67,9 @@ void setTallyProgram()
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("L");
   }
-    
+  
+  fill_solid( leds, NUM_LEDS, CRGB::Red);
+  FastLED.show();
 }
 
 void setTallyPreview() {
@@ -81,6 +83,9 @@ void setTallyPreview() {
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("P");
   }
+  
+  fill_solid( leds, NUM_LEDS, CRGB::Green);
+  FastLED.show();
 }
 
 void setTallyOff() {
@@ -94,6 +99,10 @@ void setTallyOff() {
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("S");
   }
+  
+  //fill_solid( leds, NUM_LEDS, CRGB::Black);
+  FastLED.clear();
+  FastLED.show();
 }
 
 // Handle incoming data

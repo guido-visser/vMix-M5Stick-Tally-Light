@@ -39,6 +39,10 @@ void setup()
   Serial.println(&(WIFI_SSID[0]));
   Serial.print("PASS: ");
   Serial.println(&(WIFI_PASS[0]));
+
+  // NEOFLASH HAT LED strip configuration
+  FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.setBrightness(NEOFLASH_BRIGHTNESS);
 }
 
 void loop()
@@ -178,6 +182,8 @@ void resetScreen(){
   M5.Lcd.fillScreen(TFT_BLACK);
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
+  FastLED.clear();    // CLEAR NEOFLASH HAT IF THERE IS ONE
+  FastLED.show();
 }
 
 void renderBatteryLevel() {
