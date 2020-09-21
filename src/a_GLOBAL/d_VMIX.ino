@@ -61,7 +61,7 @@ void setTallyProgram()
   M5.Lcd.fillScreen(RED);
   M5.Lcd.setTextColor(WHITE, RED);
   if(screenRotation == 1 || screenRotation == 3){
-    M5.Lcd.setCursor(25, 23);
+    M5.Lcd.setCursor(lcdCoordX(25), lcdCoordY(23));
     M5.Lcd.println("LIVE");
   } else if(screenRotation == 0 || screenRotation == 2) {
     M5.Lcd.setCursor(30, 70);
@@ -75,10 +75,10 @@ void setTallyPreview() {
   M5.Lcd.fillScreen(GREEN);
   M5.Lcd.setTextColor(BLACK, GREEN);
   if(screenRotation == 1 || screenRotation == 3){
-    M5.Lcd.setCursor(40, 23);
+    M5.Lcd.setCursor(lcdCoordX(40), lcdCoordY(23));
     M5.Lcd.println("PRE");
   } else if(screenRotation == 0 || screenRotation == 2) {
-    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.setCursor(lcdCoordX(30), lcdCoordY(70));
     M5.Lcd.println("P");
   }
 }
@@ -88,10 +88,10 @@ void setTallyOff() {
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextColor(WHITE, BLACK);
   if(screenRotation == 1 || screenRotation == 3){
-    M5.Lcd.setCursor(23, 23);
+    M5.Lcd.setCursor(lcdCoordX(23), lcdCoordY(23));
     M5.Lcd.println("SAFE");
   } else if(screenRotation == 0 || screenRotation == 2) {
-    M5.Lcd.setCursor(30, 70);
+    M5.Lcd.setCursor(lcdCoordX(30), lcdCoordY(70));
     M5.Lcd.println("S");
   }
 }
@@ -151,7 +151,11 @@ void handleData(String data)
 void showTallyScreen() {
   cls();
   screen = 0;
-  M5.Lcd.setTextSize(5);
+  if(C_PLUS){
+    M5.Lcd.setTextSize(8);
+  } else {
+    M5.Lcd.setTextSize(5);
+  }
   switch (currentState)
   {
     case '0':
