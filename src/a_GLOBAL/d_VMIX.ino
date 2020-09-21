@@ -67,7 +67,7 @@ void setTallyProgram()
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("L");
   }
-    
+  pm.onLive();
 }
 
 void setTallyPreview() {
@@ -81,6 +81,7 @@ void setTallyPreview() {
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("P");
   }
+  pm.onPre();
 }
 
 void setTallyOff() {
@@ -94,6 +95,7 @@ void setTallyOff() {
     M5.Lcd.setCursor(30, 70);
     M5.Lcd.println("S");
   }
+  pm.onSafe();
 }
 
 // Handle incoming data

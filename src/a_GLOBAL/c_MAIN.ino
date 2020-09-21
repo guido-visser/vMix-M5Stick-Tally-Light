@@ -4,6 +4,8 @@ WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult)
 PinButton btnM5(37);
 PinButton btnAction(39);
 
+PluginManager pm;
+
 char currentState = -1;
 char screen = 0;
 bool connectedTovMix = false;
