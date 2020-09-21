@@ -163,9 +163,9 @@ void start()
   M5.Lcd.setRotation(screenRotation);
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
-  M5.Lcd.setCursor(20, 20);
+  M5.Lcd.setCursor(lcdCoordX(20), lcdCoordY(20));
   M5.Lcd.println("vMix M5Stick-C Tally");
-  M5.Lcd.setCursor(35, 40);
+  M5.Lcd.setCursor(lcdCoordX(35), lcdCoordY(40));
   M5.Lcd.println("by Guido Visser");
   
   delay(2000);
@@ -187,7 +187,13 @@ void renderBatteryLevel() {
   if(battLvl > 100){
     battLvl = 100; 
   }
-  M5.Lcd.setTextSize(1);
+  if(C_PLUS){
+    M5.Lcd.setCursor(10,10);
+    M5.Lcd.setTextSize(2);
+  } else {
+    M5.Lcd.setCursor(0,0);
+    M5.Lcd.setTextSize(1);
+  }
   M5.Lcd.setCursor(0,0);
   M5.Lcd.print("Batt: ");
   M5.Lcd.print(battLvl);
@@ -208,5 +214,20 @@ void renderCurrentScreen(){
     showNetworkScreen();
   } else if (screen == 2) {
     showTallyNum();
+  }
+}
+
+int lcdCoordX(int x){
+  if(C_PLUS){
+    return x * 2.2;
+  } else {
+    return x;
+  }
+}
+int lcdCoordY(int y){
+  if(C_PLUS){
+    return y * 2;
+  } else {
+    return y;
   }
 }
