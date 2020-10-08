@@ -76,7 +76,7 @@ void loop()
         renderCurrentScreen();
       }
     }
-    if(screen != 1){
+    if(screen != 1 && screen != 4){
       if(accY > 0.70){
         if(screenRotation != 0){
           screenRotation = 0;
@@ -163,6 +163,8 @@ void start()
   M5.Lcd.setRotation(screenRotation);
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
+  M5.Lcd.setCursor(0, 0);
+  M5.Lcd.println("v2.0.0");
   M5.Lcd.setCursor(lcdCoordX(20), lcdCoordY(20));
   M5.Lcd.println("vMix M5Stick-C Tally");
   M5.Lcd.setCursor(lcdCoordX(35), lcdCoordY(40));
@@ -214,6 +216,8 @@ void renderCurrentScreen(){
     showNetworkScreen();
   } else if (screen == 2) {
     showTallyNum();
+  } else if (screen == 4) {
+    showAPScreen();
   }
 }
 

@@ -1,6 +1,6 @@
 #include <WiFi.h>
-//#include <M5StickC.h>
-#include <M5StickCPlus.h>
+#include <M5StickC.h>
+//#include <M5StickCPlus.h>
 #include <PinButton.h>
 #include <WebServer.h>
 #include <Preferences.h>
@@ -11,7 +11,7 @@
   When you use the PLUS, comment the #include <M5StickC.h> line at the top of this file by adding // to the front of the line
   and uncomment the #include <M5StickCPlus.h> file by removing //
 */
-bool C_PLUS = 1;
+bool C_PLUS = 0;
 
 #define LED_BUILTIN 10
 

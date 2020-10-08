@@ -1,22 +1,20 @@
-//#include "plugins/HEX_HAT.h";
+//#include "plugins/LED_HAT.h";
 
 class PluginManager {
-
   public:
     PluginManager(){}
 
-    //M5TallyHexHat m5HexHat;
-
+    //M5TallyLEDHat ledHat;
     void onLive(){
-      //m5HexHat.onLive();
+      //ledHat.onLive();
     }
 
     void onPre() {
-      //m5HexHat.onPre();
+      //ledHat.onPre();
     }
 
     void onSafe() {
-      //m5HexHat.onSafe();
+     //ledHat.onSafe();
     }
   
 };
