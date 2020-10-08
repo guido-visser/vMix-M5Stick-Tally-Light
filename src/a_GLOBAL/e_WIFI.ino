@@ -10,9 +10,9 @@ void startWiFi()
     //WiFi.softAP(ssid, password);
 
     M5.Lcd.println();
-    M5.Lcd.setCursor(25, 60);
+    M5.Lcd.setCursor(lcdCoordX(25), lcdCoordY(60));
     M5.Lcd.println("Waiting for WiFi...");
-    M5.Lcd.setCursor(38, 70);
+    M5.Lcd.setCursor(lcdCoordX(38), lcdCoordY(70));
     //while (WiFi.status() != WL_CONNECTED) {
     int tries = 0;
     boolean wifi_connected = true;

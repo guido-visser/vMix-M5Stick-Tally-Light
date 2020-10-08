@@ -161,14 +161,18 @@ void start()
   loadSettings();
   screenRotation = screenRotation == 1 || screenRotation == 3 ? screenRotation : 3;
   M5.Lcd.setRotation(screenRotation);
+  
+  String prod = "vMix M5Stick-C Tally";
+  String author = "by Guido Visser";
+  
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
   M5.Lcd.setCursor(0, 0);
-  M5.Lcd.println("v2.0.0");
+  M5.Lcd.println(semver);
   M5.Lcd.setCursor(lcdCoordX(20), lcdCoordY(20));
-  M5.Lcd.println("vMix M5Stick-C Tally");
+  M5.Lcd.println(prod);
   M5.Lcd.setCursor(lcdCoordX(35), lcdCoordY(40));
-  M5.Lcd.println("by Guido Visser");
+  M5.Lcd.println(author);
   
   delay(2000);
 
@@ -223,14 +227,14 @@ void renderCurrentScreen(){
 
 int lcdCoordX(int x){
   if(C_PLUS){
-    return x * 2.2;
+    return x * 1.5;
   } else {
     return x;
   }
 }
 int lcdCoordY(int y){
   if(C_PLUS){
-    return y * 2;
+    return y * 1.6875;
   } else {
     return y;
   }
