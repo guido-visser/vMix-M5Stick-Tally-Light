@@ -1,4 +1,4 @@
-#define C_PLUS 0
+#define C_PLUS 0 //CHANGE TO 1 IF YOU USE THE M5STICK-C PLUS
 
 #if C_PLUS == 1
 #include <M5StickCPlus.h>
@@ -24,4 +24,4 @@ int VMIX_PORT = 8099; //USES THE TCP API PORT, THIS IS FIXED IN VMIX
 int TALLY_NR = 1;
 int BRIGHTNESS = 12; //100%
 
-String semver = "2.0.1";
+String semver = "2.1.0";

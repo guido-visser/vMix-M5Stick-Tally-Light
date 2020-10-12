@@ -168,7 +168,7 @@ void start()
   M5.Lcd.setTextSize(1);
   M5.Lcd.setTextColor(WHITE, BLACK);
   M5.Lcd.setCursor(0, 0);
-  M5.Lcd.println(semver);
+  M5.Lcd.println("v"+semver);
   M5.Lcd.setCursor(lcdCoordX(20), lcdCoordY(20));
   M5.Lcd.println(prod);
   M5.Lcd.setCursor(lcdCoordX(35), lcdCoordY(40));

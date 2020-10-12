@@ -51,7 +51,13 @@
 	<form action='/save' id='frmData' method='post' onsubmit="return false;">
 		<div>
 			SSID:<br/>
-			<input type='text' id='ssid' name='ssid' value='" + (String)WIFI_SSID + "'>
+			<select id='ssid'>
+				<option disabled selected>Scanning wifi...</option>
+			</select>
+		</div>
+		<div class='ssidCustomDiv' style='display: none;'>
+			Hidden SSID Name:<br/>
+			<input type='text' id='ssidCustom' name='ssidCustom' value='" + (String)WIFI_SSID + "'>
 		</div>
 		<div>
 			Password:<br/>
@@ -91,10 +97,15 @@
 	const btnSave = document.querySelector('#btnSave');
 	const btnReconnect = document.querySelector('#btnReconnect');
 	const drpBright = document.querySelector('#drpBright');
+	const ssidSelect = document.querySelector('#ssid');
+
 	drpBright.value = '" + bright + "';
 	btnSave.addEventListener('click', async function(e){
 		e.preventDefault();
-		const ssid = document.querySelector('#ssid').value;
+		let ssid = document.querySelector('#ssid').value;
+		if(ssid === '__hidden__'){
+			ssid = document.querySelector('#ssidCustom').value;
+		}
 		const pwd = document.querySelector('#pwd').value;
 		const vmixip = document.querySelector('#vmixip').value;
 		const m_tally = document.querySelector('#m_tally').value;
@@ -123,6 +134,46 @@
 	btnReconnect.addEventListener('click', function(e){
 		e.preventDefault();
 		fetch('/reconnect');
+	});
+
+	ssidSelect.addEventListener('change', e => {
+		const val = e.target.value;
+		const ssidcd = document.querySelector('.ssidCustomDiv');
+		if(val === '__hidden__'){
+			ssidcd.style.display = 'block';
+		} else {
+			ssidcd.style.display = 'none';
+		}
+	});
+
+	document.addEventListener('DOMContentLoaded', async function(){
+		const res = await fetch('/scanNetwork');
+		res.text().then(text=>{
+			let networks = [text];
+			let str = '';
+			if(text.indexOf('|||') !== -1){
+				networks = text.split('|||');
+			}
+			let sel = document.getElementById('ssid');
+			sel.innerHTML = '';
+			let existingNetwork = '';
+			networks.forEach(network => {
+				let opt = document.createElement('option');
+				opt.appendChild( document.createTextNode(network) );
+				opt.value = network;
+				if('" + (String)WIFI_SSID + "' === network){
+					existingNetwork = network;
+				} 
+				sel.appendChild(opt); 
+			});
+			let opt = document.createElement('option');
+				opt.appendChild( document.createTextNode('Hidden network') );
+				opt.value = '__hidden__'; 
+				sel.appendChild(opt); 
+			if(existingNetwork !== ''){
+				sel.value = existingNetwork;
+			}
+		});
 	});
 </script>
 </body>

@@ -21,7 +21,7 @@ void handle_root()
     String tally = (String)TALLY_NR;
     String bright = (String)BRIGHTNESS;
     String HTML = HEADER;
-    HTML += "<div class=wrapper data-theme=light><h1>vMix M5Stack Tally Settings</h1><form action=/save id=frmData method=post onsubmit='return false;'><div>SSID:<br><input type=text value='" + (String)WIFI_SSID + "'id=ssid name=ssid></div><div>Password:<br><input type=text value='" + (String)WIFI_PASS + "'id=pwd name=pwd></div><div>vMix IP Address:<br><input type=text value='" + (String)VMIX_IP + "'id=vmixip name=vmixip></div><div>Main Tally Number:<br><input type=number value='" + tally + "'id=tally_num name=tally_num max=1000 min=1></div><div>Multi Input (comma separated):<br><input type=text value='" + (String)M_TALLY + "'id=m_tally name=m_tally></div><div>Brightness:<br><select id=drpBright name=bright><option value=7>0%<option value=8>20%<option value=9>40%<option value=10>60%<option value=11>80%<option value=12>100%</select></div><input type=submit value=SAVE id=btnSave class='btn btn-primary'></form><h2>Reconnect to vMix</h2><form action=/reconnect id=frmReconnect method=post onsubmit='return false;'><input type=submit value=RECONNECT id=btnReconnect></form></div><script>const btnSave=document.querySelector('#btnSave'),btnReconnect=document.querySelector('#btnReconnect'),drpBright=document.querySelector('#drpBright');drpBright.value='" + bright + "',btnSave.addEventListener('click',async function(e){e.preventDefault();const t=document.querySelector('#ssid').value,n=document.querySelector('#pwd').value,r=document.querySelector('#vmixip').value,a=document.querySelector('#m_tally').value,c=(document.querySelector('#frmData'),document.querySelector('#tally_num').value);let u=new FormData;u.append('ssid',t.trim()),u.append('pwd',n.trim()),u.append('vmixip',r.trim()),u.append('m_tally',a.trim().replace(/[^0-9,]+/g,'')),u.append('tally_num',c),btnSave.setAttribute('disabled',''),200===(await fetch('/save',{'method':'POST','cache':'no-cache','referrerPolicy':'no-referrer','body':u})).status&&(btnSave.value='SETTINGS SAVED!',await setTimeout(()=>{btnSave.value='SAVE'},3e3)),btnSave.removeAttribute('disabled')}),btnReconnect.addEventListener('click',function(e){e.preventDefault(),fetch('/reconnect')});</script>";
+    HTML += "<div class=wrapper data-theme=light><h1>vMix M5Stack Tally Settings</h1><form action=/save id=frmData method=post onsubmit=return!1><div>SSID:<br><select id=ssid><option disabled selected>Scanning wifi...</select></div><div class=ssidCustomDiv style=display:none>Hidden SSID Name:<br><input id=ssidCustom type=text value='" + (String)WIFI_SSID + "'name=ssidCustom></div><div>Password:<br><input id=pwd type=text value='" + (String)WIFI_PASS + "'name=pwd></div><div>vMix IP Address:<br><input id=vmixip type=text value='" + (String)VMIX_IP + "'name=vmixip></div><div>Main Tally Number:<br><input id=tally_num type=number value='" + tally + "'name=tally_num max=1000 min=1></div><div>Multi Input (comma separated):<br><input id=m_tally type=text value='" + (String)M_TALLY + "'name=m_tally></div><div>Brightness:<br><select id=drpBright name=bright><option value=7>0%<option value=8>20%<option value=9>40%<option value=10>60%<option value=11>80%<option value=12>100%</select></div><input id=btnSave type=submit value=SAVE class='btn btn-primary'></form><h2>Reconnect to vMix</h2><form action=/reconnect id=frmReconnect method=post onsubmit=return!1><input id=btnReconnect type=submit value=RECONNECT></form></div><script>const btnSave = document.querySelector('#btnSave'); const btnReconnect = document.querySelector('#btnReconnect'); const drpBright = document.querySelector('#drpBright'); const ssidSelect = document.querySelector('#ssid'); drpBright.value = '" + bright + "'; btnSave.addEventListener('click', async function(e){ e.preventDefault(); let ssid = document.querySelector('#ssid').value; if(ssid === '__hidden__'){ ssid = document.querySelector('#ssidCustom').value; } const pwd = document.querySelector('#pwd').value; const vmixip = document.querySelector('#vmixip').value; const m_tally = document.querySelector('#m_tally').value; const frmData = document.querySelector('#frmData'); const tally_num = document.querySelector('#tally_num').value; let formData = new FormData(); formData.append('ssid', ssid.trim()); formData.append('pwd',pwd.trim()); formData.append('vmixip', vmixip.trim()); formData.append('m_tally', m_tally.trim().replace(/[^0-9,]+/g, '')); formData.append('tally_num', tally_num); btnSave.setAttribute('disabled', ''); const res = await fetch('/save', { method: 'POST', cache: 'no-cache', referrerPolicy: 'no-referrer', body: formData }); if(res.status === 200){ btnSave.value = 'SETTINGS SAVED!'; await setTimeout(()=>{btnSave.value = 'SAVE';}, 3000); } btnSave.removeAttribute('disabled'); }); btnReconnect.addEventListener('click', function(e){ e.preventDefault(); fetch('/reconnect'); }); ssidSelect.addEventListener('change', e => { const val = e.target.value; const ssidcd = document.querySelector('.ssidCustomDiv'); if(val === '__hidden__'){ ssidcd.style.display = 'block'; } else { ssidcd.style.display = 'none'; } }); document.addEventListener('DOMContentLoaded', async function(){ const res = await fetch('/scanNetwork'); res.text().then(text=>{ let networks = [text]; let str = ''; if(text.indexOf('|||') !== -1){ networks = text.split('|||'); } let sel = document.getElementById('ssid'); sel.innerHTML = ''; let existingNetwork = ''; networks.forEach(network => { let opt = document.createElement('option'); opt.appendChild( document.createTextNode(network) ); opt.value = network; if('" + (String)WIFI_SSID + "' === network){ existingNetwork = network; } sel.appendChild(opt); }); let opt = document.createElement('option'); opt.appendChild( document.createTextNode('Hidden network') ); opt.value = '__hidden__'; sel.appendChild(opt); if(existingNetwork !== ''){ sel.value = existingNetwork; } }); });</script>";
     HTML += FOOTER;
 
     server.send(200, "text/html", HTML);
@@ -95,11 +95,29 @@ void handleReconnect(){
   server.send(200, "text/plain", "success");
 }
 
+void handleScanNetwork(){
+  int numSsid = WiFi.scanNetworks();
+  if(numSsid == -1){
+    
+  } else {
+    String retStr = "";
+    for (int thisNet = 0; thisNet<numSsid; thisNet++) {
+      if(thisNet == 0){
+        retStr += WiFi.SSID(thisNet);
+      } else {
+        retStr += "|||" + WiFi.SSID(thisNet);
+      }
+    }
+    server.send(200, "text/plain", retStr);
+  }
+}
+
 void startServer()
 {
     server.on("/", handle_root);
     server.on("/save", handle_save);
     server.on("/reconnect", handleReconnect);
+    server.on("/scanNetwork", handleScanNetwork);
     server.begin();
     Serial.println("HTTP server started");
 }
