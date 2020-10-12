@@ -1,4 +1,4 @@
-#define C_PLUS 1
+#define C_PLUS 0
 
 #if C_PLUS == 1
 #include <M5StickCPlus.h>
