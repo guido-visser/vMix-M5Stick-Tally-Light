@@ -4,22 +4,24 @@
 
 ## Features
 
--   ⚡ Press on M5 button will toggle between 4 screens:
+-   🚀 Press on M5 button will toggle between 4 screens:
     1.  The actual status of the tally (a tally status change will default back to this screen)
     2.  Network screen, showing the current IP Address so you can access the Web UI
     3.  Show the actual tally input number that is set for the unit
     4.  The brightness screen. You can use BTN39 on this screen to toggle through the 9 different settings
--   ⚡ Webserver for easy configuration
--   ⚡ Access Point mode when not connected to a WiFi network
--   ⚡ Data is saved to memory, will be remembered after device is turned off
--   ⚡ Dedicated button to reconnect to vMix (BTN39, will reconnect to vMix except on the brightness screen)
--   ⚡ Holding the same button at the end of trying to reconnect will reset the settings
--   ⚡ Dark Web UI
--   ⚡ Ability to adjust the brightness (either on the stick itself, or via the Web UI)
--   ⚡ Battery indicator
--   ⚡ Landscape & Portrait mode using accelerometer
--   ⚡ Change tally number input on the fly. On the tally input number screen, double click the BTN39 to increase the number. Long click for reset to 1
--   ⚡ Multi input support
+-   🚀 Webserver for easy configuration
+-   🚀 Access Point mode when not connected to a WiFi network
+-   🚀 Data is saved to memory, will be remembered after device is turned off
+-   🚀 Dedicated button to reconnect to vMix (BTN39, will reconnect to vMix except on the brightness screen)
+-   🚀 Holding the same button at the end of trying to reconnect will reset the settings
+-   🚀 Dark Web UI
+-   🚀 Ability to adjust the brightness (either on the stick itself, or via the Web UI)
+-   🚀 Battery indicator
+-   🚀 Landscape & Portrait mode using accelerometer
+-   🚀 Change tally number input on the fly. On the tally input number screen, double click the BTN39 to increase the number. Long click for reset to 1
+-   🚀 Multi input support
+-	🚀 Automatic wifi scanning to easily select your wifi network
+-	🚀 Set an interval to automatically reconnect to vMix after the interval has passed
 
 ---
 
@@ -69,6 +71,76 @@ Enjoy 😄
     4. Specify the input number that the stick must listen to. (This is the little number in the top left corner of every input)
 4. Hit the save button.
 5. The stick will restart with the given information.
+
+### Fields explained
+**SSID**
+
+A select dropdown which shows a list all the wifi networks found.
+
+**Hidden SSID Name**
+
+This field only shows when you select `Hidden network` in the SSID list. 
+Type in the SSID that you want to connect to.
+
+**Password**
+
+The password that corresponds to the selected wifi network.
+
+**vMix IP Address**
+
+Fill in the IP Address of the computer where vMix is running. 
+
+How to find the IP of the vMix PC:
+1. Press Win + R
+2. Type in `cmd` and hit enter. A commandprompt will appear
+3. In the commandprompt type `ipconfig` and press enter
+4. Your IP Address can be found behind the `IPv4 Address. . . . . . . . . . . : ` line
+
+**Main Tally Number**
+
+This field corresponds to the input number in vMix. Every input has a number in the top left corner of the video tile. Enter the input number you want the tally to respond to.
+
+**Multi Input**
+
+It's possible to have more inputs hooked into 1 tally light, you can provide a comma separated string to set this up.
+
+Example: 
+
+When the Main Tally Number is set to `1` and Multi Input is set to `2,5`, this will be the behavior:
+
+SAFE:
+
+None of the inputs are in Preview or in the Program feed.
+
+PRE:
+
+One of the inputs is in Preview, none are on Program.
+
+LIVE:
+
+One of the inputs is on the Program feed. Live always has the highest priority.
+
+**Reconnect interval**
+
+Input is in seconds. This will try to reconnect to vMix every `x` seconds after the interval has passed when it's disconnected. This will loop if the connection cannot be established. 
+
+WARNING:
+Since the stick is single threaded, when the stick tries to reconnect to vMix, the Web UI is not accessible! 
+
+Example:
+When set to `10` it will try to reconnect to vMix every 10 seconds after connection was unsuccessful.
+
+**Brightness**
+
+Set the brightness of the LCD. Option to choose from:
+* 0%
+* 20%
+* 40%
+* 60%
+* 80%
+* 100%
+
+NOTE: Obviously, the battery will drain faster when the brightness is set to a high value. I recommend setting it at 60%.
 
 ---
 
