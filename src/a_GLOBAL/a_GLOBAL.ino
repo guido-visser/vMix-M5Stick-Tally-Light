@@ -23,5 +23,6 @@ String M_TALLY = "";
 int VMIX_PORT = 8099; //USES THE TCP API PORT, THIS IS FIXED IN VMIX
 int TALLY_NR = 1;
 int BRIGHTNESS = 12; //100%
+int CONN_INT = 0;
 
-String semver = "2.1.0";
+String semver = "2.2.0";

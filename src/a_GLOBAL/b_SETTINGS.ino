@@ -19,6 +19,10 @@ void loadSettings()
     VMIX_IP = preferences.getString("vmix_ip");
   }
 
+  if(preferences.getUInt("conn_int")){
+    CONN_INT = preferences.getUInt("conn_int");
+  }
+
   if(preferences.getString("m_tally").length() > 0){
     M_TALLY = preferences.getString("m_tally");
   }

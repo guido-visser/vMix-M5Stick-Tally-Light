@@ -40,6 +40,23 @@ boolean connectTovMix(bool recursive)
   }
 }
 
+void singleReconnect(){
+  resetScreen();
+  M5.Lcd.println("Connecting to vMix...");
+  if (client.connect(&(VMIX_IP[0]), VMIX_PORT))
+  {
+    lastConnCheck = millis();
+    connectedTovMix = true;
+    M5.Lcd.println("Connected to vMix!");
+
+    // Subscribe to the tally events
+    client.println("SUBSCRIBE TALLY");
+    showTallyScreen();
+  } else {
+    lastConnCheck = millis();
+  }
+}
+
 boolean retryConnectionvMix(int tryCount) {
   cls();
   M5.Lcd.setTextSize(1);

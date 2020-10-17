@@ -2,7 +2,7 @@
   <html lang='en'>
   <head>
   <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no'>
   <title>vMix M5Stick-C Tally</title>
   <style>
   	@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
@@ -76,6 +76,10 @@
 		<input type='text' id='m_tally' name='m_tally' value='" + (String)M_TALLY + "'>
 	</div>
 	<div>
+		Reconnect interval (in seconds, 0 means no reconnection interval):<br/>
+		<input type='number' id='conn_int' name='conn_int' value='" + CONN_INT + "'>
+	</div>
+	<div>
 		Brightness:<br/>
 		<select id='drpBright' name='bright'>
 			<option value='7'>0%</option>
@@ -111,12 +115,14 @@
 		const m_tally = document.querySelector('#m_tally').value;
 		const frmData = document.querySelector('#frmData');
 		const tally_num = document.querySelector('#tally_num').value;
+		const conn_int = parseInt(document.querySelector('#conn_int').value, 10) || 0;
 		let formData = new FormData();
 		formData.append('ssid', ssid.trim());
 		formData.append('pwd',pwd.trim());
 		formData.append('vmixip', vmixip.trim());
 		formData.append('m_tally', m_tally.trim().replace(/[^0-9,]+/g, ''));
 		formData.append('tally_num', tally_num);
+		formData.append('conn_int', conn_int);
 		btnSave.setAttribute('disabled', '');
 		const res = await fetch('/save', {
 		    method: 'POST',

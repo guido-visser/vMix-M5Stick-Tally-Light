@@ -18,6 +18,7 @@ boolean started = false;
 // Time measure
 int interval = 5000;
 unsigned long lastCheck = 0;
+unsigned long lastConnCheck = 0;
 unsigned long lastBattCheck = 0;
 unsigned long lastAccCheck = 0;
 int screenRotation = 3;
@@ -140,11 +141,19 @@ void loop()
       renderBatteryLevel(); 
     }
   }
+
+  if (CONN_INT != 0 && !client.connected() && !apEnabled && millis() > lastConnCheck + (CONN_INT * 1000))
+  {
+    client.stop();
+    Serial.println("Reconnecting, based on given interval");
+    singleReconnect();
+  }
   
   if (!client.connected() && !apEnabled && millis() > lastCheck + interval)
   {
     client.stop();
     lastCheck = millis();
+    Serial.println("Not connected anymore");
     noConnectionTovMix();
   }
 }
@@ -214,6 +223,9 @@ int getBatteryLevel(void)
 }
 
 void renderCurrentScreen(){
+  if(!client.connected()){
+    return;
+  }
   if(screen == 0){
     showTallyScreen();
   } else if (screen == 1) {
