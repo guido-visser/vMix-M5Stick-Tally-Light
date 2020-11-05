@@ -72,6 +72,24 @@ boolean retryConnectionvMix(int tryCount) {
   return true;
 }
 
+void posTallyNums(){
+  int y = lcdCoordY(70);
+  int x = lcdCoordX(30);
+  if(screenRotation == 1 || screenRotation == 3){  
+    x = lcdCoordX(70);
+    y = lcdCoordY(23);
+    if(tnlen == 2){
+      x = lcdCoordX(50);
+    }
+    M5.Lcd.setCursor(x, y);
+  } else {
+    if(tnlen == 2){
+      x = lcdCoordX(10);
+    }
+    M5.Lcd.setCursor(x, y);
+  }
+}
+
 void setTallyProgram()
 {
   digitalWrite(LED_BUILTIN, LOW);
@@ -79,10 +97,18 @@ void setTallyProgram()
   M5.Lcd.setTextColor(WHITE, RED);
   if(screenRotation == 1 || screenRotation == 3){
     M5.Lcd.setCursor(lcdCoordX(25), lcdCoordY(23));
-    M5.Lcd.println("LIVE");
+    if(MODE == 0){
+      M5.Lcd.println("LIVE");
+    }
   } else if(screenRotation == 0 || screenRotation == 2) {
-    M5.Lcd.setCursor(30, 70);
-    M5.Lcd.println("L");
+    M5.Lcd.setCursor(lcdCoordX(30), lcdCoordY(70));
+    if(MODE == 0){
+      M5.Lcd.println("L");
+    }
+  }
+  if(MODE == 1){
+    posTallyNums();
+    M5.Lcd.println(TALLY_NR);
   }
   pm.onLive();
 }
@@ -93,10 +119,18 @@ void setTallyPreview() {
   M5.Lcd.setTextColor(BLACK, GREEN);
   if(screenRotation == 1 || screenRotation == 3){
     M5.Lcd.setCursor(lcdCoordX(40), lcdCoordY(23));
-    M5.Lcd.println("PRE");
+    if(!JUSTLIVE && MODE == 0){
+      M5.Lcd.println("PRE");
+    }
   } else if(screenRotation == 0 || screenRotation == 2) {
     M5.Lcd.setCursor(lcdCoordX(30), lcdCoordY(70));
-    M5.Lcd.println("P");
+    if(!JUSTLIVE && MODE == 0){
+      M5.Lcd.println("P");
+    }
+  }
+  if(MODE == 1){
+    posTallyNums();
+    M5.Lcd.println(TALLY_NR);
   }
   pm.onPre();
 }
@@ -107,10 +141,18 @@ void setTallyOff() {
   M5.Lcd.setTextColor(WHITE, BLACK);
   if(screenRotation == 1 || screenRotation == 3){
     M5.Lcd.setCursor(lcdCoordX(23), lcdCoordY(23));
-    M5.Lcd.println("SAFE");
+    if(!JUSTLIVE && MODE == 0){
+      M5.Lcd.println("SAFE");
+    }
   } else if(screenRotation == 0 || screenRotation == 2) {
     M5.Lcd.setCursor(lcdCoordX(30), lcdCoordY(70));
-    M5.Lcd.println("S");
+    if(!JUSTLIVE && MODE == 0){
+      M5.Lcd.println("S");
+    }
+  }
+  if(MODE == 1){
+    posTallyNums();
+    M5.Lcd.println(TALLY_NR);
   }
   pm.onSafe();
 }
@@ -175,20 +217,32 @@ void showTallyScreen() {
   } else {
     M5.Lcd.setTextSize(5);
   }
-  switch (currentState)
-  {
-    case '0':
-      setTallyOff();
-      break;
-    case '1':
-      setTallyProgram();
-      break;
-    case '2':
-      setTallyPreview();
-      break;
-    default:
-      setTallyOff();
+  if(!JUSTLIVE){
+    switch (currentState)
+    {
+      case '0':
+        setTallyOff();
+        break;
+      case '1':
+        setTallyProgram();
+        break;
+      case '2':
+        setTallyPreview();
+        break;
+      default:
+        setTallyOff();
+    }  
+  } else {
+    switch (currentState)
+    {
+      case '1':
+        setTallyProgram();
+        break;
+      default:
+        setTallyOff();
+    }
   }
+  
   renderBatteryLevel();
 }
 

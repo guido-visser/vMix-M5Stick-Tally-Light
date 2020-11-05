@@ -30,6 +30,7 @@ float accZ = 0;
 void setup()
 {
   uint8_t c;
+  setCpuFrequencyMhz(80); //Thanks Irvin Cee
   Serial.begin(115200);
   M5.begin();
   M5.IMU.Init();

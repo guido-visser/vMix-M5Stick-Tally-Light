@@ -90,6 +90,20 @@
 			<option value='12'>100%</option>
 		</select>
 	</div>
+	<div>
+		Just Live:<br/>
+		<select id='drpJustLive' name='justLive'>
+			<option value='0'>False</option>
+			<option value='1'>True</option>
+		</select>
+	</div>
+	<div>
+		Mode:<br/>
+		<select id='drpMode' name='mode'>
+			<option value='0'>Text (SAFE, PRE, LIVE)</option>
+			<option value='1'>Tally Number</option>
+		</select>
+	</div>
 		<input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>
 	</form>
 	<h2>Reconnect to vMix</h2>
@@ -102,8 +116,12 @@
 	const btnReconnect = document.querySelector('#btnReconnect');
 	const drpBright = document.querySelector('#drpBright');
 	const ssidSelect = document.querySelector('#ssid');
+	const drpJustLive = document.querySelector('#drpJustLive');
+	const drpMode = document.querySelector('#drpMode');
 
 	drpBright.value = '" + bright + "';
+	drpJustLive.value = '" + justLive + "';
+	drpMode.value = '" + _mode + "';
 	btnSave.addEventListener('click', async function(e){
 		e.preventDefault();
 		let ssid = document.querySelector('#ssid').value;
@@ -115,6 +133,9 @@
 		const m_tally = document.querySelector('#m_tally').value;
 		const frmData = document.querySelector('#frmData');
 		const tally_num = document.querySelector('#tally_num').value;
+		const bright = drpBright.value;
+		const mode = drpMode.value;
+		const justLive = drpJustLive.value;
 		const conn_int = parseInt(document.querySelector('#conn_int').value, 10) || 0;
 		let formData = new FormData();
 		formData.append('ssid', ssid.trim());
@@ -123,6 +144,9 @@
 		formData.append('m_tally', m_tally.trim().replace(/[^0-9,]+/g, ''));
 		formData.append('tally_num', tally_num);
 		formData.append('conn_int', conn_int);
+		formData.append('bright', bright);
+		formData.append('mode', mode);
+		formData.append('justLive', justLive);
 		btnSave.setAttribute('disabled', '');
 		const res = await fetch('/save', {
 		    method: 'POST',

@@ -13,6 +13,8 @@
 
 #define LED_BUILTIN 10
 
+int tnlen = 1; //LET THIS BE
+
 Preferences preferences;
 
 //DON'T CHANGE THESE VARIABLES, YOU CAN CHANGE THEM IN THE WEB UI
@@ -24,5 +26,7 @@ int VMIX_PORT = 8099; //USES THE TCP API PORT, THIS IS FIXED IN VMIX
 int TALLY_NR = 1;
 int BRIGHTNESS = 12; //100%
 int CONN_INT = 0;
+int MODE = 0; //0 for words like SAFE, PRE and LIVE. 1 for numbers with changing background
+int JUSTLIVE = 0; //When 1, SAFE and PRE are not used. Just the LIVE screen
 
-String semver = "2.2.0";
+String semver = "2.3.0";

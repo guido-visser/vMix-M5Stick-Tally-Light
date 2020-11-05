@@ -14,7 +14,6 @@ class PluginManager {
     }
 
     void onSafe() {
-     //ledHat.onSafe();
+      //ledHat.onSafe();
     }
-  
 };

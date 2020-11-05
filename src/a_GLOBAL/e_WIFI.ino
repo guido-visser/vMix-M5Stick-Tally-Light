@@ -49,8 +49,10 @@ void startWiFi()
 // This starts the M5Stack as a WiFi Access Point so you can configure it
 void startLocalWiFi()
 {
+    char apSsid[32];
+    sprintf(apSsid, "vMix-M5Stick-Tally %s", WiFi.macAddress().substring(9, WiFi.macAddress().length()));
     WiFi.mode(WIFI_AP);
-    WiFi.softAP("vMix-M5Stick-Tally", "12345678");
+    WiFi.softAP(apSsid, "12345678");
     apEnabled = true;
     showAPScreen();
     delay(100);

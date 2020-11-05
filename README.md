@@ -22,8 +22,15 @@
 -   🚀 Multi input support
 -	🚀 Automatic wifi scanning to easily select your wifi network
 -	🚀 Set an interval to automatically reconnect to vMix after the interval has passed
+-	🚀 Option to just show the LIVE state and ignore the PRE and SAFE states
+-	🚀 Option to show the tally number instead of the SAFE, PRE and LIVE texts
 
 ---
+
+## FAQ
+
+**Q: Does this work with ATEM, TriCaster, OBS Studio and others?**
+A: Yes, however [Tally Arbiter](https://github.com/josephdadams/TallyArbiter) is required for this functionality. The plan is to integrate seemless with TA. Stay tuned for updates.
 
 ## Getting started: Uploading the code to the stick
 
@@ -142,6 +149,16 @@ Set the brightness of the LCD. Option to choose from:
 
 NOTE: Obviously, the battery will drain faster when the brightness is set to a high value. I recommend setting it at 60%.
 
+**Just Live**
+
+`true`: The stick only lights up when the configured input(s) is/are live.
+`false`: The stick shows when the configured input(s) is/are safe, are in preview or when it is live.
+
+**Mode**
+
+`Text (SAFE, PRE, LIVE)`: Show the textual representation of the status of the configured input(s).
+`Tally Number`: Show the configured main tally number and only update the background color when the status changes.
+
 ---
 
 ## Plugins
@@ -166,6 +183,7 @@ Since M5Stack has a lot of different products, some wonderful people forked my c
 
 ## TODO
 
+-   [ ] Create a seemless integration with [Tally Arbiter](https://github.com/josephdadams/TallyArbiter)
 -   [ ] Configuration tutorial
     -   [x] Written
     -   [ ] Video
