@@ -14,4 +14,10 @@ void showNetworkScreen() {
   M5.Lcd.println();
   M5.Lcd.println("IP Address:");
   M5.Lcd.println(WiFi.localIP());
+  M5.Lcd.println();
+  M5.Lcd.println("Wifi Strength:");
+  M5.Lcd.print(rssi);
+  M5.Lcd.print(" dBm (");
+  M5.Lcd.print(rssiLabel);
+  M5.Lcd.println(")");
 }

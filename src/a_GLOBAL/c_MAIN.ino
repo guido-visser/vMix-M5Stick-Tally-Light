@@ -21,11 +21,15 @@ unsigned long lastCheck = 0;
 unsigned long lastConnCheck = 0;
 unsigned long lastBattCheck = 0;
 unsigned long lastAccCheck = 0;
+unsigned long sigStrengthChk = 0;
 int screenRotation = 3;
 
 float accX = 0;
 float accY = 0;
 float accZ = 0;
+
+long rssi = -100;
+String rssiLabel = "";
 
 void setup()
 {
@@ -141,6 +145,20 @@ void loop()
       lastBattCheck = millis();
       renderBatteryLevel(); 
     }
+  }
+
+  if(screen == 1 && millis() > sigStrengthChk + interval){
+    rssi = WiFi.RSSI();
+    sigStrengthChk = millis();
+    Serial.println(rssi);
+    if(rssi < 0 && rssi > -67) {
+      rssiLabel = "strong";
+    } else if(rssi < -67 && rssi > -85) {
+      rssiLabel = "average";
+    } else if (rssi < -85){
+      rssiLabel = "poor";
+    }
+    showNetworkScreen();
   }
 
   if (CONN_INT != 0 && !client.connected() && !apEnabled && millis() > lastConnCheck + (CONN_INT * 1000))
