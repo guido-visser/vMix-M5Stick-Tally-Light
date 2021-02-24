@@ -1,3 +1,6 @@
+bool stm = 0;
+bool rec = 0;
+
 // Connect to vMix instance
 boolean connectTovMix(bool recursive)
 {
@@ -12,6 +15,7 @@ boolean connectTovMix(bool recursive)
 
     // Subscribe to the tally events
     client.println("SUBSCRIBE TALLY");
+    client.println("SUBSCRIBE ACTS");
     showTallyScreen();
     return true;
   }
@@ -204,8 +208,19 @@ void handleData(String data)
   }
   else
   {
-    Serial.print("Response from vMix: ");
-    Serial.println(data);
+    if(data.indexOf("ACTS OK Recording 1") == 0){
+      rec = 1;
+    } else if(data.indexOf("ACTS OK Recording 0") == 0){
+      rec = 0;
+    } else if(data.indexOf("ACTS OK Streaming 1") == 0) {
+      stm = 1;
+    } else if(data.indexOf("ACTS OK Streaming 0") == 0){
+      stm = 0;
+    } else {
+      Serial.print("Response from vMix: ");
+      Serial.println(data);
+    }
+    showStatus();
   }
 }
 
@@ -231,7 +246,7 @@ void showTallyScreen() {
         break;
       default:
         setTallyOff();
-    }  
+    }
   } else {
     switch (currentState)
     {
@@ -244,6 +259,39 @@ void showTallyScreen() {
   }
   
   renderBatteryLevel();
+  showStatus();
+}
+
+void showStatus(){
+  if(C_PLUS){
+    M5.Lcd.setCursor(10,10);
+    M5.Lcd.setTextSize(2);
+  } else {
+    M5.Lcd.setCursor(10,0);
+    M5.Lcd.setTextSize(1);
+  }
+
+  if(screenRotation == 1 || screenRotation == 3){
+    M5.Lcd.setCursor(140,0); 
+  } else {
+    M5.Lcd.setCursor(60,150); 
+  }
+  if(rec){
+    M5.Lcd.print("REC");
+  } else {
+    M5.Lcd.print("   ");
+  }
+
+  if(screenRotation == 1 || screenRotation == 3){
+    M5.Lcd.setCursor(110,0); 
+  } else {
+    M5.Lcd.setCursor(0,150); 
+  }
+  if(stm){
+    M5.Lcd.print("STM");
+  } else {
+    M5.Lcd.print("   ");
+  }
 }
 
 void noConnectionTovMix(){

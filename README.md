@@ -6,7 +6,7 @@
 
 -   🚀 Press on M5 button will toggle between 4 screens:
     1.  The actual status of the tally (a tally status change will default back to this screen)
-    2.  Network screen, showing the current IP Address so you can access the Web UI
+    2.  Network screen, showing the current IP Address so you can access the Web UI (+ a wifi strength indicator)
     3.  Show the actual tally input number that is set for the unit
     4.  The brightness screen. You can use BTN39 on this screen to toggle through the 9 different settings
 -   🚀 Webserver for easy configuration
@@ -24,6 +24,7 @@
 -	🚀 Set an interval to automatically reconnect to vMix after the interval has passed
 -	🚀 Option to just show the LIVE state and ignore the PRE and SAFE states
 -	🚀 Option to show the tally number instead of the SAFE, PRE and LIVE texts
+-   🚀 Indicators for Streaming (STM) and Recording (REC)
 
 ---
 
@@ -152,14 +153,26 @@ NOTE: Obviously, the battery will drain faster when the brightness is set to a h
 **Just Live**
 
 `true`: The stick only lights up when the configured input(s) is/are live.
+
 `false`: The stick shows when the configured input(s) is/are safe, are in preview or when it is live.
 
 **Mode**
 
 `Text (SAFE, PRE, LIVE)`: Show the textual representation of the status of the configured input(s).
+
 `Tally Number`: Show the configured main tally number and only update the background color when the status changes.
 
 ---
+
+## Static IP Address
+
+**WARNING**: This is only for users that know what they're doing. If you are not familiar with ip addresses, gateways or subnets, stay away.
+
+It is possible to have a static IP Address, however it's not possible (yet) to do this via the Web UI. You need to hard-code this. A template is provided, but you'll have to change some code:
+
+-   Open `e_WIFI.ino`
+-   Remove the lines that have `REMOVE THIS LINE WHEN YOU NEED STATIC IP` in them (be sure to also remove the comment markers `/*` and `*/`)
+-   Change the settings after the `IPAddress` lines that meet your needs in your environment.
 
 ## Plugins
 

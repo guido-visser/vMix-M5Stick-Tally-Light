@@ -1,10 +1,23 @@
 void startWiFi()
 {
-    Serial.println("STARTING WIFI THINGY");
+    Serial.println("STARTING WIFI");
     WiFi.mode(WIFI_STA);
     WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
 
     // We start by connecting to a WiFi network
+/* REMOVE THIS LINE WHEN YOU NEED STATIC IP
+    // Set your Static IP address
+    IPAddress local_IP(192, 168, 178, 222);
+    IPAddress gateway(192, 168, 178, 222);
+    IPAddress subnet(255, 255, 255, 0);
+    IPAddress primaryDNS(8, 8, 8, 8); // optional
+    IPAddress secondaryDNS(8, 8, 4, 4); // optional
+    
+    // Configures static IP address
+    if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+      Serial.println("STA Failed to configure");
+    }
+REMOVE THIS LINE WHEN YOU NEED STATIC IP */
 
     //WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
     //WiFi.softAP(ssid, password);

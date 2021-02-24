@@ -6,6 +6,10 @@
 
 There are 2 HATs that already work with the provided `LED_HEX.h` plugin. To make use of this plugin, remove the comment marks `//` from the lines in `k_PLUGINMANAGER.h`.
 
+#### Prerequisites
+
+You need the FastLED Library and is included in the `libs` folder. Please make sure that the library is found in: `%userprofile%\Documents\Arduino\libraries`
+
 ##### HEX HAT
 
 You don't have to change the `LED_HEX.h` file. 🎉
