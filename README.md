@@ -68,6 +68,21 @@ Enjoy 😄
 
 ---
 
+## Updating the firmware
+
+### IMPORTANT BEFORE UPDATING TO V2.5.0
+
+The firmware update logic allows any arduino compiled binary to be uploaded and flased to the stick. I decided to password protect this feature, since it's unwanted that a random person starts to upload random firmware to the stick.
+
+**CHANGE THE DEFAULT PASSWORD**
+You need to change the `UPDATE_PASSWORD` manually! 
+
+### Update to v2.5.0 via the old way
+
+This version has the firmware upload logic, meaning from this version onwards, you can update the firmware wirelessly instead of needing to connect it to a computer. 
+
+### How to update the firmware after v2.5.0?
+
 ## Configuring the stick
 
 1. Once the code is uploaded to the stick, wait until it's in AP (Access Point) mode.
