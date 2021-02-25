@@ -83,6 +83,10 @@ This version has the firmware upload logic, meaning from this version onwards, y
 
 ### How to update the firmware after v2.5.0?
 
+This documentation will be updated soon!
+
+---
+
 ## Configuring the stick
 
 1. Once the code is uploaded to the stick, wait until it's in AP (Access Point) mode.
