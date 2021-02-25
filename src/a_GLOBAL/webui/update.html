@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <style>
+      @import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);
+      html,
+      body{
+        background: #2d2d2d;
+          color: #fff;
+          font-family: "Open Sans";
+      }
+
+      a,
+      a:active,
+      a:visited {
+        color: white;
+      }
+
+      .prg-bar {
+          display: none;
+          width: 100%;
+          height: 25px;
+          background: #2d2d2d;
+          margin-top: 10px;
+          box-shadow: 0px 0px 3px #000 inset;
+          border-radius: 5px;
+          box-sizing: border-box;
+          padding: 5px;
+      }
+
+      #prg{
+        display: none;
+      }
+
+      .prg-bar-inner {
+          background: #616161;
+          width: 0%;
+          height: 15px;
+          border-radius: 4px;
+          box-sizing: border-box;
+      }
+
+      .wrapper {
+          width: 400px;
+          margin: 20px auto;
+          text-align: center;
+          background: #3e3d3d;
+          box-shadow: 0px 0px 5px #000;
+          padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <div class='wrapper'>
+      <h3>Update Firmware</h3>
+      <p>Download the latest release (.bin file)<br/>from <a href='https://github.com/guido-visser/vMix-M5Stick-Tally-Light/releases'>GitHub</a> and upload it below</p>
+      <form method='POST' action='#' enctype='multipart/form-data' id='upload_form'>
+        <input type='file' name='update'>
+        <input type='submit' value='Update'>
+      </form>
+      <div class='prg-bar'>
+          <div class='prg-bar-inner'></div>
+      </div>
+      <div id='prg'>0%</div>
+    </div>
+    <script>
+      $('form').submit(function(e){
+        e.preventDefault();
+        $('input[type=submit]').attr('disabled', 'disabled');
+        $('#prg,.prg-bar').show();
+        var form = $('#upload_form')[0];
+        var data = new FormData(form);
+        $.ajax({
+          url: '/firmware',
+          type: 'POST',
+          data: data,
+          contentType: false,
+          processData:false,
+          xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener('progress', function(evt) {
+              if (evt.lengthComputable) {
+                var per = evt.loaded / evt.total;
+                $('#prg').html(Math.round(per*100) + '%');
+                $('.prg-bar-inner').css('width', Math.round(per*100)+'%');
+              }
+            }, false);
+            return xhr;
+          },
+          success:function(d, s) {
+            $('.wrapper').text('Firmware updated successfully');
+          },
+          error: function (a, b, c) {
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

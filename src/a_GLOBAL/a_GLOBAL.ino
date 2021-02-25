@@ -10,6 +10,7 @@
 #include <WebServer.h>
 #include <Preferences.h>
 #include "k_PLUGINMANAGER.h";
+#include <Update.h>
 
 #define LED_BUILTIN 10
 
@@ -29,4 +30,4 @@ int CONN_INT = 0;
 int MODE = 0; //0 for words like SAFE, PRE and LIVE. 1 for numbers with changing background
 int JUSTLIVE = 0; //When 1, SAFE and PRE are not used. Just the LIVE screen
 
-String semver = "2.4.0";
+String semver = "2.5.0";

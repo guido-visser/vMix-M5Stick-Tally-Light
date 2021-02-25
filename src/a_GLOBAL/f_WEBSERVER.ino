@@ -136,12 +136,44 @@ void handleScanNetwork(){
   }
 }
 
+char handleUpdatePage(){
+  const char* serverIndex = "<html><head><style>@import url(https://fonts.googleapis.com/css2?family=Open+Sans&display=swap);body,html{background:#2d2d2d;color:#fff;font-family:'Open Sans'}a,a:active,a:visited{color:#fff}.prg-bar{display:none;width:100%;height:25px;background:#2d2d2d;margin-top:10px;box-shadow:0 0 3px #000 inset;border-radius:5px;box-sizing:border-box;padding:5px}#prg{display:none}.prg-bar-inner{background:#616161;width:0%;height:15px;border-radius:4px;box-sizing:border-box}.wrapper{width:400px;margin:20px auto;text-align:center;background:#3e3d3d;box-shadow:0 0 5px #000;padding:10px}</style></head><body><script src=https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js></script><div class=wrapper><h3>Update Firmware</h3><p>Download the latest release (.bin file)<br>from <a href=https://github.com/guido-visser/vMix-M5Stick-Tally-Light/releases>GitHub</a> and upload it below</p><form action=# enctype=multipart/form-data id=upload_form method=POST><input type=file name=update> <input type=submit value=Update></form><div class=prg-bar><div class=prg-bar-inner></div></div><div id=prg>0%</div></div><script>$('form').submit(function(t){t.preventDefault(),$('input[type=submit]').attr('disabled','disabled'),$('#prg,.prg-bar').show();var r=$('#upload_form')[0],e=new FormData(r);$.ajax({url:'/firmware',type:'POST',data:e,contentType:!1,processData:!1,xhr:function(){var t=new window.XMLHttpRequest;return t.upload.addEventListener('progress',function(t){if(t.lengthComputable){var r=t.loaded/t.total;$('#prg').html(Math.round(100*r)+'%'),$('.prg-bar-inner').css('width',Math.round(100*r)+'%')}},!1),t},success:function(t,r){$('.wrapper').text('Firmware updated successfully')},error:function(t,r,e){}})})</script></body></html>";
+ server.send(200, "text/html", serverIndex);
+}
+
 void startServer()
 {
     server.on("/", handle_root);
     server.on("/save", handle_save);
     server.on("/reconnect", handleReconnect);
     server.on("/scanNetwork", handleScanNetwork);
+    server.on("/update", handleUpdatePage);
+
+    /*handling uploading firmware file */
+  server.on("/firmware", HTTP_POST, []() {
+    server.sendHeader("Connection", "close");
+    server.send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
+    ESP.restart();
+  }, []() {
+    HTTPUpload& upload = server.upload();
+    if (upload.status == UPLOAD_FILE_START) {
+      Serial.printf("Update: %s\n", upload.filename.c_str());
+      if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { //start with max available size
+        Update.printError(Serial);
+      }
+    } else if (upload.status == UPLOAD_FILE_WRITE) {
+      /* flashing firmware to ESP*/
+      if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+        Update.printError(Serial);
+      }
+    } else if (upload.status == UPLOAD_FILE_END) {
+      if (Update.end(true)) { //true to set the size to the current progress
+        Serial.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
+      } else {
+        Update.printError(Serial);
+      }
+    }
+  });
     server.begin();
     Serial.println("HTTP server started");
 }
