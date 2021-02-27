@@ -264,17 +264,23 @@ void showTallyScreen() {
 
 void showStatus(){
   if(C_PLUS){
-    M5.Lcd.setCursor(10,10);
     M5.Lcd.setTextSize(2);
   } else {
-    M5.Lcd.setCursor(10,0);
     M5.Lcd.setTextSize(1);
   }
 
   if(screenRotation == 1 || screenRotation == 3){
-    M5.Lcd.setCursor(140,0); 
+    if(C_PLUS){
+      M5.Lcd.setCursor(200,0);
+    } else {
+      M5.Lcd.setCursor(140,0);
+    }
   } else {
-    M5.Lcd.setCursor(60,150); 
+    if(C_PLUS){
+      M5.Lcd.setCursor(95,220); 
+    } else {
+      M5.Lcd.setCursor(60,150); 
+    }
   }
   if(rec){
     M5.Lcd.print("REC");
@@ -283,9 +289,17 @@ void showStatus(){
   }
 
   if(screenRotation == 1 || screenRotation == 3){
-    M5.Lcd.setCursor(110,0); 
+    if(C_PLUS){
+      M5.Lcd.setCursor(150,0);
+    } else {
+      M5.Lcd.setCursor(110,0); 
+    }
   } else {
-    M5.Lcd.setCursor(0,150); 
+    if(C_PLUS){
+      M5.Lcd.setCursor(10,220); 
+    } else {
+      M5.Lcd.setCursor(0,150); 
+    }
   }
   if(stm){
     M5.Lcd.print("STM");
