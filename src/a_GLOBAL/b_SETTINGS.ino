@@ -13,6 +13,12 @@ void loadSettings()
       Serial.println("Use hardcoded settings here");
       saveWiFiPreferences(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
   }
+
+  Serial.print("U_PASS BEFORE: ");
+  Serial.println(U_PASS);
+  U_PASS = preferences.getString("u_pass") || U_PASS;
+  Serial.print("U_PASS AFTER: ");
+  Serial.println(U_PASS);
   
   if(preferences.getString("vmix_ip").length() > 0){
     TALLY_NR = preferences.getUInt("tally");
@@ -58,6 +64,7 @@ void resetSettings(){
   
   preferences.putString("wifi_ssid", "");
   preferences.putString("wifi_pass", "");
+  preferences.putString("u_pass", "bla");
   preferences.putString("vmix_ip", "");
   preferences.putUInt("tally", 1);
   preferences.putUInt("bright", 12);
@@ -66,10 +73,7 @@ void resetSettings(){
   preferences.end();
 
   Serial.println("Settings are reset");
-  resetScreen();
-  M5.Lcd.println("Settings are reset");
-  M5.Lcd.println();
-  M5.Lcd.println("Please reboot device");
+  ESP.restart();
 }
 
 void increaseTally(){

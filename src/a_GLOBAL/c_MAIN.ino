@@ -9,6 +9,7 @@ PluginManager pm;
 char currentState = -1;
 char screen = 0;
 bool connectedTovMix = false;
+int resetCount = 0;
 
 char deviceName[32];
 int status = WL_IDLE_STATUS;
@@ -61,8 +62,11 @@ void loop()
     } else if (screen == 2) {
       showBrightnessScreen();
     } else if (screen == 3) {
+      showResetScreen(false);
+    } else if (screen == 5) {
       showTallyScreen();
     }
+    resetCount = 0;
   }
 
   M5.IMU.getAccelData(&accX, &accY, &accZ);
@@ -122,6 +126,11 @@ void loop()
 
   if(btnAction.isClick() && screen == 3){
      updateBrightnessVar();
+  }
+
+  if(btnAction.isClick() && screen == 5) {
+    resetCount++;
+    showResetScreen(resetCount == 10);
   }
 
   if(btnAction.isDoubleClick() && screen == 2){
@@ -253,6 +262,8 @@ void renderCurrentScreen(){
     showTallyNum();
   } else if (screen == 4) {
     showAPScreen();
+  } else if (screen == 5) {
+    showResetScreen(false);
   }
 }
 

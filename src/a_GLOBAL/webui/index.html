@@ -107,13 +107,18 @@
 		<input type='submit' value='SAVE' id='btnSave' class='btn btn-primary'>
 	</form>
 	<h2>Reconnect to vMix</h2>
-	<form onsubmit="return false;" action="/reconnect" id="frmReconnect" method="post">
-		<input type="submit" value="RECONNECT" id="btnReconnect" />
+	<form onsubmit='return false;' action='/reconnect' id='frmReconnect' method='post'>
+		<input type='submit' value='RECONNECT' id='btnReconnect' />
+	</form>
+	<h2>Update firmware</h2>
+	<form onsubmit='return false;' action='/auth' id='frmUpdate' method='post'>
+		<input type="submit" value="UPDATE" id="btnUpdate" />
 	</form>
 </div>
 <script type='text/javascript'>
 	const btnSave = document.querySelector('#btnSave');
 	const btnReconnect = document.querySelector('#btnReconnect');
+	const btnUpdate = document.querySelector('#btnUpdate');
 	const drpBright = document.querySelector('#drpBright');
 	const ssidSelect = document.querySelector('#ssid');
 	const drpJustLive = document.querySelector('#drpJustLive');
@@ -166,6 +171,27 @@
 		fetch('/reconnect');
 	});
 
+	btnUpdate.addEventListener('click', function(e){
+		e.preventDefault();
+		const pass = prompt('What is the update password?');
+		exe(pass);
+	});
+
+	async function exe(pass){
+		let formData = new FormData();
+		formData.append('pass', pass);
+		const call = await fetch('/auth', {
+			method: 'POST',
+			cache: 'no-cache',
+		    referrerPolicy: 'no-referrer',
+		    body: formData
+		});
+		const res = await call.json();
+		if(res.access === 'granted'){
+			window.location.href = '/update';
+		}
+	}
+
 	ssidSelect.addEventListener('change', e => {
 		const val = e.target.value;
 		const ssidcd = document.querySelector('.ssidCustomDiv');
@@ -176,7 +202,7 @@
 		}
 	});
 
-	document.addEventListener('DOMContentLoaded', async function(){
+	async function scanNetwork() {
 		const res = await fetch('/scanNetwork');
 		res.text().then(text=>{
 			let networks = [text];
@@ -204,6 +230,28 @@
 				sel.value = existingNetwork;
 			}
 		});
+	}
+
+	document.addEventListener('DOMContentLoaded', function(){
+		console.log('U_PASS', '" + U_PASS + "');
+		if('" + U_PASS + "' === ''){
+			const newPass = prompt('Please specify your update password');
+			let fData = new FormData();
+			fData.append('pass', newPass);
+			async function savePassword(){
+				const call = await fetch('/savePass', {
+				    method: 'POST',
+				    cache: 'no-cache',
+				    referrerPolicy: 'no-referrer',
+				    body: fData
+				});
+				if(call.status === 200){
+					alert('Password set!');
+				}
+			}
+			savePassword();
+		}
+		scanNetwork();
 	});
 </script>
 </body>
