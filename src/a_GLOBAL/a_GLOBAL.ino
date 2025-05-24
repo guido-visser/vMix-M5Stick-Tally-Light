@@ -1,10 +1,13 @@
-#define C_PLUS 0 //CHANGE TO 1 IF YOU USE THE M5STICK-C PLUS
+#define C_PLUS 2 //CHANGE TO 1 IF YOU USE THE M5STICK-C PLUS, 2 for M5STICK-C PLUS2
 
 #if C_PLUS == 1
-#include <M5StickCPlus.h>
+  #include <M5StickCPlus.h>
+#elif C_PLUS == 2
+  #include <M5StickCPlus2.h>
 #else
-#include <M5StickC.h>
+  #include <M5StickC.h>
 #endif
+
 #include <WiFi.h>
 #include <PinButton.h>
 #include <WebServer.h>
@@ -29,4 +32,4 @@ int CONN_INT = 0;
 int MODE = 0; //0 for words like SAFE, PRE and LIVE. 1 for numbers with changing background
 int JUSTLIVE = 0; //When 1, SAFE and PRE are not used. Just the LIVE screen
 
-String semver = "2.4.1";
+String semver = "2.5.0";

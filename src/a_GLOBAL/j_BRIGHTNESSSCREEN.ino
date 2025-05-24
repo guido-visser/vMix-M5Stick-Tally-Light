@@ -52,6 +52,8 @@ void updateBrightnessVar(){
   showBrightnessScreen();
 }
 void updateBrightness(){
-  M5.Axp.ScreenBreath(BRIGHTNESS);
+  #if C_PLUS == 0 || C_PLUS == 1
+    M5.Axp.ScreenBreath((BRIGHTNESS-6)*16);
+  #endif
   saveBrightness();
 }

@@ -37,7 +37,13 @@ void setup()
   setCpuFrequencyMhz(80); //Thanks Irvin Cee
   Serial.begin(115200);
   M5.begin();
-  M5.IMU.Init();
+  
+  #if C_PLUS == 0 || C_PLUS == 1
+    M5.IMU.Init();
+  #else 
+    M5.Imu.init();
+  #endif
+  
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
@@ -65,7 +71,12 @@ void loop()
     }
   }
 
-  M5.IMU.getAccelData(&accX, &accY, &accZ);
+  #if C_PLUS == 0 || C_PLUS == 1
+    M5.IMU.getAccelData(&accX, &accY, &accZ);
+  #else
+    M5.Imu.getAccelData(&accX, &accY, &accZ);
+  #endif
+  
 
   if(millis() > lastAccCheck + 1000){
     lastAccCheck = millis();
@@ -236,9 +247,13 @@ void renderBatteryLevel() {
 
 int getBatteryLevel(void)
 {
-  uint16_t vbatData = M5.Axp.GetVbatData();
-  double vbat = vbatData * 1.1 / 1000;
-  return floor(100.0 * ((vbat - 3.0) / (4.07 - 3.0)));
+  #if C_PLUS != 2
+    uint16_t vbatData = M5.Axp.GetVbatData();
+    double vbat = vbatData * 1.1 / 1000;
+    return floor(100.0 * ((vbat - 3.0) / (4.07 - 3.0)));
+  #else
+    return M5.Power.getBatteryLevel();
+  #endif
 }
 
 void renderCurrentScreen(){

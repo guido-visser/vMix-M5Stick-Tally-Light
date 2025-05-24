@@ -19,9 +19,6 @@ void startWiFi()
     }
 REMOVE THIS LINE WHEN YOU NEED STATIC IP */
 
-    //WiFi.begin(&(WIFI_SSID[0]), &(WIFI_PASS[0]));
-    //WiFi.softAP(ssid, password);
-
     M5.Lcd.println();
     M5.Lcd.setCursor(lcdCoordX(25), lcdCoordY(60));
     M5.Lcd.println("Waiting for WiFi...");
@@ -30,18 +27,20 @@ REMOVE THIS LINE WHEN YOU NEED STATIC IP */
     int tries = 0;
     boolean wifi_connected = true;
 
-    while (WiFi.waitForConnectResult() != WL_CONNECTED)
-    {
+    unsigned long startAttemptTime = millis();
+    const unsigned long wifiTimeout = 10000;
+
+    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < wifiTimeout) {
         M5.Lcd.print(".");
-        delay(1000);
-        tries++;
-        if (tries > 5)
-        {
-            tries = 0;
-            Serial.println("Wifi connection failed, start local wifi");
-            wifi_connected = false;
-            break;
-        }
+        delay(1000); // Kleinere delay voor snellere feedback
+    }
+
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("Wifi connection failed, start local wifi");
+        wifi_connected = false;
+    } else {
+        Serial.println("Connected to WiFi");
+        wifi_connected = true;
     }
 
     if (wifi_connected == false)
