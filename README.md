@@ -33,7 +33,23 @@
 **Q: Does this work with ATEM, TriCaster, OBS Studio and others?**
 A: Yes, however [Tally Arbiter](https://github.com/josephdadams/TallyArbiter) is required for this functionality. The plan is to integrate seemless with TA. Stay tuned for updates.
 
-## Getting started: Uploading the code to the stick
+## Easiest install method
+
+I've created a simple website that will allow you to easily flash your sticks. 
+NOTE: This tool only works on Chromium Based browsers.
+
+1. Select the version of the firmware
+2. Select your stick
+3. Click install, a device selection window will popup
+4. Connect your stick and see which COM-port is added to the list.
+5. Select that added COM-port and click OK
+6. Wait for the flash process to finish
+7. Once done, restart the stick (Hold the on/off button for 6 seconds, after that press it again to turn it on)
+8. Enjoy 😄 
+
+[vMix M5StickC Tally Light Installer](https://vmix-tally.guidovisser.com)
+
+## Harder (and outdated) install method: Uploading the code to the stick
 
 ### Video tutorial
 
@@ -41,7 +57,7 @@ A: Yes, however [Tally Arbiter](https://github.com/josephdadams/TallyArbiter) is
 
 ### Step 1
 
-1.1 Follow the tutorial on the [M5Stack website](https://docs.m5stack.com/#/en/arduino/arduino_development).
+1.1 Follow the tutorial on the [M5Stack website](https://docs.m5stack.com/en/arduino/arduino_ide).
 
 1.2 Copy the libraries that are used by this project (found in the `libs` folder) to your system. The default path is: `%userprofile%\Documents\Arduino\libraries`
 
