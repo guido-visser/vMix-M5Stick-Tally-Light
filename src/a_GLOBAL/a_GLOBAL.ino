@@ -12,6 +12,8 @@
 #include <PinButton.h>
 #include <WebServer.h>
 #include <Preferences.h>
+#include <SPIFFS.h>
+#include <ArduinoJson.h>
 #include "k_PLUGINMANAGER.h";
 
 #define LED_BUILTIN 10

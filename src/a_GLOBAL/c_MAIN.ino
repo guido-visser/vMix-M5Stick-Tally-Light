@@ -37,6 +37,12 @@ void setup()
   setCpuFrequencyMhz(80); //Thanks Irvin Cee
   Serial.begin(115200);
   M5.begin();
+
+  // Initialize SPIFFS
+  if (!SPIFFS.begin(true)) {
+    Serial.println("SPIFFS Mount Failed");
+    return;
+  }
   
   #if C_PLUS == 0 || C_PLUS == 1
     M5.IMU.Init();
@@ -58,6 +64,51 @@ void setup()
 void loop()
 {
   server.handleClient();
+
+  if (Serial.available()) {
+    String cmd = Serial.readStringUntil('\n'); // e.g., WRITE index.html 123
+    if (cmd.startsWith("WRITE ")) {
+      int space1 = cmd.indexOf(' ', 6);
+      String filename = cmd.substring(6, space1);
+      int length = cmd.substring(space1 + 1).toInt();
+
+      File file = SPIFFS.open("/" + filename, FILE_WRITE);
+      if (!file) {
+        Serial.println("FILE_ERROR");
+        return;
+      }
+
+      int bytesRead = 0;
+      while (bytesRead < length) {
+        if (Serial.available()) {
+          char c = Serial.read();
+          file.write(c);
+          bytesRead++;
+        }
+      }
+      file.close();
+      Serial.println("OK");
+    }
+
+    if (cmd.startsWith("DELETE ")) {
+      Serial.print("GETTING IN THE DELTE IF");
+      String filename = cmd.substring(7);
+      filename.trim();
+    
+      if (!filename.startsWith("/")) filename = "/" + filename;
+    
+      Serial.print("Trying to delete file: ");
+      Serial.println(filename);
+    
+      if (SPIFFS.exists(filename)) {
+        bool success = SPIFFS.remove(filename);
+        Serial.println(success ? "OK" : "REMOVE_FAIL");
+      } else {
+        Serial.println("NOT_FOUND");
+      }
+    }
+  }
+  
   btnM5.update();
   if (btnM5.isClick()) {
     if (screen == 0) {

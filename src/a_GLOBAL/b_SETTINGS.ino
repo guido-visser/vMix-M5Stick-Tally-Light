@@ -1,7 +1,7 @@
 void loadSettings()
 {
+  Serial.println("LOAD SETTINGS");
   preferences.begin("vMixTally", false);
-  
   if (preferences.getString("wifi_ssid").length() > 0)
   {
     Serial.println("LOADING FROM PREFERENCES, OVERRIDING HARDCODED VARIABLES");
@@ -15,6 +15,7 @@ void loadSettings()
   }
   
   if(preferences.getString("vmix_ip").length() > 0){
+    Serial.println("SETTING TALLY_NR AND VMIX_IP");
     TALLY_NR = preferences.getUInt("tally");
     VMIX_IP = preferences.getString("vmix_ip");
     if(TALLY_NR > 9){
@@ -22,15 +23,19 @@ void loadSettings()
     }
   }
 
+  Serial.println("SET CONN_INT");
   CONN_INT = preferences.getUInt("conn_int") || CONN_INT;
+  Serial.println("SET MODE");
   MODE = preferences.getUInt("mode") || MODE;
+  Serial.println("SET JUSTLIVE");
   JUSTLIVE = preferences.getUInt("justLive") || JUSTLIVE;
 
   if(preferences.getString("m_tally").length() > 0){
+    Serial.println("SET M_TALLY");
     M_TALLY = preferences.getString("m_tally");
   }
 
-  Serial.println("BRIGHTNESS");
+  Serial.println("SET BRIGHTNESS");
   Serial.println(preferences.getUInt("bright"));
 
   if(preferences.getUInt("bright")){
@@ -39,19 +44,25 @@ void loadSettings()
       M5.Axp.ScreenBreath((BRIGHTNESS-6)*16);
     #endif
   }
+  Serial.println("PREF END");
   preferences.end();
 }
 
 void saveWiFiPreferences(String wifi_ssid, String wifi_pass)
 {
+    Serial.println("PREF START");
     preferences.begin("vMixTally", false);
     if (wifi_ssid != "")
     {
-        preferences.putString("wifi_ssid", wifi_ssid);
-        preferences.putString("wifi_pass", wifi_pass);
+      Serial.println("PUT WIFI_SSID " + wifi_ssid);
+      preferences.putString("wifi_ssid", wifi_ssid);
+      Serial.println("PUT WIFI_PASS " + wifi_pass);
+      preferences.putString("wifi_pass", wifi_pass);
     }
     preferences.end();
+    Serial.println("SET WIFI_SSID");
     WIFI_SSID = wifi_ssid;
+    Serial.println("SET WIFI_PASS");
     WIFI_PASS = wifi_pass;
 }
 

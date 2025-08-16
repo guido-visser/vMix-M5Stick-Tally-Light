@@ -61,10 +61,21 @@ REMOVE THIS LINE WHEN YOU NEED STATIC IP */
 // This starts the M5Stack as a WiFi Access Point so you can configure it
 void startLocalWiFi()
 {
-    char apSsid[32];
-    sprintf(apSsid, "vMix-M5Stick-Tally %s", WiFi.macAddress().substring(9, WiFi.macAddress().length()));
+    String apSsid = "vMix Tally PLUS2";
+    //char apSsid[32];
+    //sprintf(apSsid, "vMix-M5Stick-Tally %s", WiFi.macAddress().substring(9).c_str());
+
+    WiFi.disconnect(true);
+    delay(100);
+
     WiFi.mode(WIFI_AP);
+    delay(100);
+
     WiFi.softAP(apSsid, "12345678");
+    IPAddress IP = WiFi.softAPIP();
+    Serial.print("AP IP address: ");
+    Serial.println(IP);
+
     apEnabled = true;
     showAPScreen();
     delay(100);
