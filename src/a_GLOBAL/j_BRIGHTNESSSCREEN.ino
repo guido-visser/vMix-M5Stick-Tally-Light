@@ -4,7 +4,7 @@ void showBrightnessScreen(){
   M5.Lcd.setRotation(3);
 
   resetScreen();
-  digitalWrite(LED_BUILTIN, HIGH);
+  ledToggle(false);
   M5.Lcd.fillScreen(WHITE);
   M5.Lcd.setTextColor(BLACK, WHITE);
 
@@ -70,7 +70,7 @@ void updateBrightnessVar(){
   }
 
   updateBrightness();
-  digitalWrite(LED_BUILTIN, HIGH);
+  ledToggle(false);
   showBrightnessScreen();
 }
 

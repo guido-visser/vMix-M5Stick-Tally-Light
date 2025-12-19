@@ -100,7 +100,7 @@ void posTallyNums()
 
 void setTallyProgram()
 {
-  digitalWrite(LED_BUILTIN, HIGH);
+  ledToggle(true);
   M5.Lcd.fillScreen(RED);
   M5.Lcd.setTextColor(WHITE, RED);
   if(screenRotation == 1 || screenRotation == 3){
@@ -122,7 +122,7 @@ void setTallyProgram()
 }
 
 void setTallyPreview() {
-  digitalWrite(LED_BUILTIN, LOW);
+  ledToggle(false);
   M5.Lcd.fillScreen(GREEN);
   M5.Lcd.setTextColor(BLACK, GREEN);
   if(screenRotation == 1 || screenRotation == 3){
@@ -144,7 +144,7 @@ void setTallyPreview() {
 }
 
 void setTallyOff() {
-  digitalWrite(LED_BUILTIN, LOW);
+  ledToggle(false);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextColor(WHITE, BLACK);
   if(screenRotation == 1 || screenRotation == 3){

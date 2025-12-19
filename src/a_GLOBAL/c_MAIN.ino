@@ -102,7 +102,7 @@ void setup()
 
   delay(10);
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, LOW);
+  ledToggle(false);
 
   loadSettings();
 
@@ -278,7 +278,7 @@ void start()
 
 void resetScreen(){
   cls();
-  digitalWrite(LED_BUILTIN, LOW);
+  ledToggle(false);
   M5.Lcd.setCursor(0, 0);
   M5.Lcd.fillScreen(TFT_BLACK);
   M5.Lcd.setTextSize(1);
@@ -418,5 +418,21 @@ int lcdCoordY(int y){
     return y * 1.6875;
   } else {
     return y;
+  }
+}
+
+void ledToggle(bool val){
+  if(!val){
+    #if C_PLUS == 0 || C_PLUS == 1
+      digitalWrite(LED_BUILTIN, HIGH);
+    #elif C_PLUS == 2
+      digitalWrite(LED_BUILTIN, LOW);
+    #endif
+  } else {
+    #if C_PLUS == 0 || C_PLUS == 1
+      digitalWrite(LED_BUILTIN, LOW);
+    #elif C_PLUS == 2
+      digitalWrite(LED_BUILTIN, HIGH);
+    #endif
   }
 }
