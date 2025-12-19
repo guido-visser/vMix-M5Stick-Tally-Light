@@ -76,27 +76,31 @@ boolean retryConnectionvMix(int tryCount) {
   return true;
 }
 
-void posTallyNums(){
-  int y = lcdCoordY(70);
-  int x = lcdCoordX(30);
-  if(screenRotation == 1 || screenRotation == 3){  
-    x = lcdCoordX(70);
-    y = lcdCoordY(23);
-    if(tnlen == 2){
-      x = lcdCoordX(50);
-    }
-    M5.Lcd.setCursor(x, y);
+void posTallyNums()
+{
+  String s = String(TALLY_NR);
+
+  // Ensure that textSize is already set before using this function!
+  // (this happens in showTallyScreen)
+
+  int w = M5.Lcd.textWidth(s);
+
+  int x = (M5.Lcd.width() - w) / 2;
+  int y;
+
+  // Vertical position depending on rotation
+  if (screenRotation == 1 || screenRotation == 3) {
+    y = (M5.Lcd.height() / 2) - 20;   // landscape
   } else {
-    if(tnlen == 2){
-      x = lcdCoordX(10);
-    }
-    M5.Lcd.setCursor(x, y);
+    y = (M5.Lcd.height() / 2) - 20;   // portrait (same offset works here too)
   }
+
+  M5.Lcd.setCursor(x, y);
 }
 
 void setTallyProgram()
 {
-  digitalWrite(LED_BUILTIN, LOW);
+  ledToggle(true);
   M5.Lcd.fillScreen(RED);
   M5.Lcd.setTextColor(WHITE, RED);
   if(screenRotation == 1 || screenRotation == 3){
@@ -118,7 +122,7 @@ void setTallyProgram()
 }
 
 void setTallyPreview() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  ledToggle(false);
   M5.Lcd.fillScreen(GREEN);
   M5.Lcd.setTextColor(BLACK, GREEN);
   if(screenRotation == 1 || screenRotation == 3){
@@ -140,7 +144,7 @@ void setTallyPreview() {
 }
 
 void setTallyOff() {
-  digitalWrite(LED_BUILTIN, HIGH);
+  ledToggle(false);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setTextColor(WHITE, BLACK);
   if(screenRotation == 1 || screenRotation == 3){
@@ -260,15 +264,46 @@ void showTallyScreen() {
   
   renderBatteryLevel();
   showStatus();
+  drawWiFiIcon(M5.Lcd.width() - 30, 2);
+
+  // WiFi icon as the last thing to draw, so that REC/STM does not overwrite it
+  int xWifi = M5.Lcd.width() - 30;
+  int yWifi = 2;
+  drawWiFiIcon(xWifi, yWifi);
 }
 
 void showStatus(){
+
+  // --- set background/text color based on tally state ---
+  uint16_t bg = (currentState == '1') ? RED : (currentState == '2') ? GREEN : BLACK;
+  uint16_t fg = (currentState == '2') ? BLACK : WHITE;  // PRE -> black, otherwise white
+
+  // --- text size ---
   if(C_PLUS){
     M5.Lcd.setTextSize(2);
   } else {
     M5.Lcd.setTextSize(1);
   }
 
+  // Landscape (rotation 1/3): top right
+  if(screenRotation == 1 || screenRotation == 3){
+    // wide enough to cover both REC and STM
+    int y = 0;
+    int h = (C_PLUS ? 20 : 10) + 6;
+    int w = (C_PLUS ? 90 : 70);
+    int x = M5.Lcd.width() - w;
+    M5.Lcd.fillRect(x, y, w, h, bg);
+  } 
+  // Portrait (rotation 0/2): bottom (where you print REC/STM)
+  else {
+    int h = (C_PLUS ? 20 : 10) + 6;
+    int y = M5.Lcd.height() - h;
+    M5.Lcd.fillRect(0, y, M5.Lcd.width(), h, bg);
+  }
+
+  M5.Lcd.setTextColor(fg, bg);
+
+  // REC
   if(screenRotation == 1 || screenRotation == 3){
     if(C_PLUS){
       M5.Lcd.setCursor(200,0);
@@ -288,6 +323,7 @@ void showStatus(){
     M5.Lcd.print("   ");
   }
 
+  // STM
   if(screenRotation == 1 || screenRotation == 3){
     if(C_PLUS){
       M5.Lcd.setCursor(150,0);
