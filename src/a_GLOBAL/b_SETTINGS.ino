@@ -37,6 +37,12 @@ void loadSettings()
     BRIGHTNESS = preferences.getUInt("bright");
     #if C_PLUS == 0 || C_PLUS == 1
       M5.Axp.ScreenBreath((BRIGHTNESS-6)*16);
+    #elif C_PLUS == 2
+      // BRIGHTNESS in your UI appears to be 7..12 (0..100%)
+      int pct = brightnessPctFromVar(BRIGHTNESS);
+      pct = constrain(pct, 10, 100);
+      uint8_t b = (uint8_t)(pct * 255 / 100);
+      M5.Display.setBrightness(b);
     #endif
   }
   preferences.end();

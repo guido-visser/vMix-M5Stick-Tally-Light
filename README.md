@@ -209,6 +209,8 @@ This is my very first C-project, if you have any suggestions on how to improve t
 
 A massive thanks to [Thomas Mout](https://github.com/ThomasMout) for creating [Arduino vMix Tally](https://github.com/ThomasMout/Arduino-vMix-tally). This project is based on his.
 
+Another huge thank you to [@ArieR1963](https://github.com/ArieR1963) for making the Plus2 work properly
+
 #### Support the project
 
 This project is completely free to use in any environment (commerically or non-commerically). However, if you like it and use it regularly, please consider buying me a coffee 😄

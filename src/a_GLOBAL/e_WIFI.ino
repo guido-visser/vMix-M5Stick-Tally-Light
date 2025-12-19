@@ -32,7 +32,7 @@ REMOVE THIS LINE WHEN YOU NEED STATIC IP */
 
     while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < wifiTimeout) {
         M5.Lcd.print(".");
-        delay(1000); // Kleinere delay voor snellere feedback
+        delay(1000); // Shorter delay for faster feedback
     }
 
     if (WiFi.status() != WL_CONNECTED) {
